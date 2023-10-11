@@ -1,5 +1,10 @@
-// src/quiz/dto/create-quiz.dto.ts
-
+// create-quiz.dto.ts
+import { CreateQuestionDto } from '../../question/dto/create-question.dto';
 export class CreateQuizDto {
-    title: string;
-  }
+  title: string;
+  description: string;
+  status: string;
+  questions: CreateQuestionDto[];
+}
+
+

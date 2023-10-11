@@ -3,6 +3,10 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import {TypeOrmModule} from "@nestjs/typeorm";
 import { QuizModule } from './quiz/quiz.module';
+import { QuestionModule } from './question/question.module';
+import { UserModule } from './user/user.module';
+import { CategoryModule } from './category/category.module';
+import { AnswerModule } from './answer/answer.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -16,7 +20,7 @@ import { QuizModule } from './quiz/quiz.module';
       synchronize: true,
       autoLoadEntities: true,
     }),
-    QuizModule,
+    QuizModule, QuestionModule, UserModule, CategoryModule, AnswerModule
   ],
   controllers: [AppController],
   providers: [AppService],
