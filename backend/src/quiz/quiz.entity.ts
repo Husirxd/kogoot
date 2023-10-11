@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, ManyToMany } from 'typeorm';
 import { Question } from '../question/question.entity';
 import { Category } from '../category/category.entity';
-import { User } from '../user/user.entity';
+import { User } from '../users/users.entity';
 
 @Entity()
 export class Quiz {
