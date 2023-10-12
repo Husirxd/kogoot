@@ -11,7 +11,7 @@ export class QuizController {
     
   }
   
-  @UseGuards(AuthGuard)
+  // @UseGuards(AuthGuard)
   @Post()
   async createQuiz(@Body() createQuizDto: CreateQuizDto) {
     const quiz = await this.quizService.createQuiz(createQuizDto);
