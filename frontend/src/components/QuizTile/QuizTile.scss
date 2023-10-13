@@ -1,0 +1,67 @@
+.quiz-tile{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+    border-radius: 1rem;
+    background-color: #fff;
+    box-shadow: 4px 4px 0px rgb(0, 0, 0);
+    gap:1rem;
+    border: 4px solid #000;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+    position: relative;
+
+    .quiz-category{
+        position: absolute;
+        top: 2rem;
+        right: 2rem;
+    }
+
+    .quiz-tile__title{
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #000;
+    }
+    .quiz-tile__description{
+        font-size: 1rem;
+        font-weight: 400;
+        color: #000;
+    }
+    .quiz-tile__footer{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        margin-top: 1rem;
+        .quiz-tile__footer__author{
+            font-size: 1rem;
+            font-weight: 400;
+            color: #000;
+        }
+        .quiz-tile__footer__date{
+            font-size: 1rem;
+            font-weight: 400;
+            color: #000;
+        }
+    }
+}
+
+.quiz-tile{
+    .quiz-image{
+        background-image: url("/assets/images/category/quiz.jpg");
+        background-size: cover;
+        height: 130px;
+        width: 100%;
+        border-radius: 10px;
+    }
+    &.quiz--kuchnia{
+        .quiz-image{
+            //background-image: url("/assets/images/category/cuisine.jpg");
+            background-position: center;
+        }
+    }
+}

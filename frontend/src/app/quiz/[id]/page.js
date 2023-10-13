@@ -9,7 +9,7 @@ export default function Page({ params }) {
 
   useEffect(() => {
     console.log(params.id)
-    fetch("http://localhost:3000/quizzes/single/5")
+    fetch("http://localhost:3000/quizzes/single/"+params.id)
     .then((res)=>res.json())
     .then((data)=>{
       setQuizData(data)

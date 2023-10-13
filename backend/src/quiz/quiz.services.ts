@@ -45,11 +45,6 @@ export class QuizService {
       categories: categories,
       });
   
-
-
-    
-
-
     await this.quizRepository.save(quiz);   
 
 
@@ -86,9 +81,30 @@ export class QuizService {
   }
 
   async getQuizzes(limit: number): Promise<Quiz[]> {
-    return this.quizRepository.find({
-      take:limit,
-    });
+    return this.quizRepository.createQueryBuilder('quiz')
+    .limit(limit)
+    .leftJoinAndSelect('quiz.categories', 'categories')
+    .orderBy('quiz.createdAt', 'DESC')
+    .getMany();
+  }
+
+  async getQuizzesByUser(userId: number): Promise<Quiz[]> {
+    return  this.quizRepository.createQueryBuilder('quiz')
+    .leftJoinAndSelect('quiz.questions', 'questions')
+    .leftJoinAndSelect('questions.answers', 'answers')
+    .leftJoinAndSelect('quiz.user', 'user')
+    .where('user.id = :userId', { userId })
+    .getMany();
+  }
+
+  async getQuizzesByCategory(categoryId: number): Promise<Quiz[]> {
+    return this.quizRepository.createQueryBuilder('quiz')
+    .leftJoinAndSelect('quiz.questions', 'questions')
+    .leftJoinAndSelect('questions.answers', 'answers')
+    .leftJoinAndSelect('quiz.categories', 'categories')
+    .where('categories.id = :categoryId', { categoryId })
+    .getMany();
+
   }
 
   async validateQuiz(body: ValidateQuizDto): Promise<Object> {

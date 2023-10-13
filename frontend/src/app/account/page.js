@@ -1,10 +1,18 @@
 // pages/login.js
 "use client"
-import { useState } from 'react';
-
+import "./login.scss"
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isError, setIsError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const router = useRouter();
+
+  useEffect(() => {
+    localStorage.removeItem('token');
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,19 +37,29 @@ const LoginPage = () => {
         const data = await response.json();
         //save token to local storage
         localStorage.setItem('token', data.token);
+        localStorage.setItem('userId', data.id);
+        router.push('/?loggedIn=true');
+        //redirect to home page
+
       } else {
         // Handle login failure, e.g., display an error message.
+        setIsError(true);
+        setErrorMessage("Login failed. Please try again later.");
       }
     } catch (error) {
       // Handle any network or client-side errors here.
       console.error(error);
+      setIsError(true);
+      setErrorMessage(error.message);
     }
   };
 
   return (
-    <div>
+    <div className="page container">
+      {isError && <div class="notification notification--error">{errorMessage}</div>}
+      <div className="login-form">
       <h1>Login</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} >
         <div>
           <label>Email</label>
           <input
@@ -49,6 +67,7 @@ const LoginPage = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+
           />
         </div>
         <div>
@@ -58,10 +77,12 @@ const LoginPage = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+
           />
         </div>
         <button type="submit">Login</button>
       </form>
+      </div>
     </div>
   );
 };

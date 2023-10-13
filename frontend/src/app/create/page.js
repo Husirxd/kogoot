@@ -1,7 +1,20 @@
 "use client"
-import { useState } from 'react';
-
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import "./create.scss"
 export default function CreateQuiz() {
+    const router = useRouter()
+ 
+    useEffect(() => {
+
+        const accessToken = localStorage.getItem('token');
+        if(!accessToken) {
+            router.push('/account');
+        }
+
+    }, []);
+
+
     const [quizData, setQuizData] = useState({
         title: '',
         description: '',
@@ -63,14 +76,21 @@ export default function CreateQuiz() {
                 },
                 body: JSON.stringify(quizData),
             });
-            // Handle the response as needed
+            // Handle the response, get quizId and redirect to /quiz/[quizId]
+            if (response.ok) {
+                const data = await response.json();
+                router.push(`/quiz/${data.id}`);
+            }else{
+                // Handle errors
+            }
         } catch (error) {
             // Handle errors
         }
     };
 
     return (
-        <div>
+        <div className='container page'>
+            <div className='page-create'>
             <h1>Create Quiz</h1>
             <form>
                 <label>
@@ -98,13 +118,15 @@ export default function CreateQuiz() {
                         onChange={(e) => setQuizData({ ...quizData, categoriesIds: Array.from(e.target.selectedOptions, (option) => option.value) })}
                     >
                         {/* Populate categories from a prefetch list */}
-                        <option value="1">Category 1</option>
+                        <option value="1">Cuisine</option>
                         {/* Add more category options here */}
                     </select>
                 </label>
 
+                <div className='questions'>
+                <h2>Questions</h2>
                 {quizData.questions.map((question, questionIndex) => (
-                    <div key={questionIndex}>
+                    <div key={questionIndex} className='question'>
                         <label>
                             Question:
                             <input
@@ -117,11 +139,12 @@ export default function CreateQuiz() {
                                 }}
                             />
                         </label>
-
+                        <div className='answers'>
                         {question.answers.map((answer, answerIndex) => (
                             <div key={answerIndex}>
-                                <label>
-                                    Answer:
+                                 Answer:
+                                <div className='answer'>
+                               
                                     <input
                                         type="text"
                                         value={answer.answer}
@@ -131,10 +154,9 @@ export default function CreateQuiz() {
                                             setQuizData({ ...quizData, questions: updatedQuestions });
                                         }}
                                     />
-                                </label>
 
-                                <label>
-                                    Correct:
+                                    <span>
+                                       
                                     <input
                                         type="checkbox"
                                         checked={answer.isCorrect}
@@ -143,25 +165,27 @@ export default function CreateQuiz() {
                                             updatedQuestions[questionIndex].answers[answerIndex].isCorrect = e.target.checked;
                                             setQuizData({ ...quizData, questions: updatedQuestions });
                                         }}
-                                    />
-                                </label>
+                                    /> Is correct
+                                    </span>
+                                </div>
                             </div>
                         ))}
-
+                        </div>
                         <button type="button" onClick={() => handleAnswerAdd(questionIndex)}>
                             Add New Answer
                         </button>
                     </div>
                 ))}
-
+                </div>
                 <button type="button" onClick={handleQuestionAdd}>
                     Add New Question
                 </button>
-
-                <button type="button" onClick={handleSubmit}>
-                    Create Quiz
-                </button>
+                <div className='flex flex--center flex--column'>
+                <h3>Hey you. Nice quiz. Create it?</h3>
+                <button type="button" onClick={handleSubmit}>Yea, why not</button>
+                </div>
             </form>
+            </div>
         </div>
     );
 }

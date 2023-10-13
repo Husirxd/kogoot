@@ -24,6 +24,18 @@ export class QuizController {
     return quiz;
   }
 
+  @Get("user/:userId")
+  async getQuizzesByUser(@Param('userId') userId: number) {
+    const quizzes = await this.quizService.getQuizzesByUser(userId);
+    return quizzes;
+  }
+
+  @Get("category/:categoryId")
+  async getQuizzesByCategory(@Param('categoryId') categoryId: number) {
+    const quizzes = await this.quizService.getQuizzesByCategory(categoryId);
+    return quizzes;
+  }
+
   @Get()
   async getQuizzes(@Query('limit') limit: number) {
     const quizzes = await this.quizService.getQuizzes(limit);
