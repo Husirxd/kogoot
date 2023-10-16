@@ -37,8 +37,14 @@ export class QuizController {
   }
 
   @Get()
-  async getQuizzes(@Query('limit') limit: number) {
-    const quizzes = await this.quizService.getQuizzes(limit);
+  async getQuizzes(@Query('limit') limit: number, @Query('offset') offset: number) {
+    const quizzes = await this.quizService.getQuizzes(limit, offset);
+    return quizzes;
+  }
+
+  @Get('search')
+  async searchQuizzes(@Query('search') search: string) {
+    const quizzes = await this.quizService.searchQuizzes(search);
     return quizzes;
   }
 

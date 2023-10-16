@@ -1,5 +1,7 @@
+@import "./mixin.scss";
 .why-us{
     margin-top: 100px;
+   
     h2{
         span{
             filter: drop-shadow(2px 2px 0px #ffcc00);
@@ -10,6 +12,10 @@
     }
     .rows{
         gap:10rem;
+        @include to(1024px){
+            flex-direction:column;
+            gap:3rem;
+        }
     }
     img{
         width: 100%;

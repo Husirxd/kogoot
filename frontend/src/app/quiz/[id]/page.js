@@ -1,11 +1,12 @@
 "use client"
+import "./quiz.scss"
 import { useEffect, useState } from "react";
-
+import { useRouter } from "next/navigation";
 
 export default function Page({ params }) {
   const [quizData, setQuizData] = useState(null);
   const [userAnswers, setUserAnswers] = useState([]);
-
+  const router = useRouter();
 
   useEffect(() => {
     console.log(params.id)
@@ -39,8 +40,9 @@ export default function Page({ params }) {
       body: JSON.stringify(userAnswersJSON),
     })
       .then((response) => response.json())
-      .then((score) => {
-        alert(`Your score is: ${score.score}`);
+      .then((data) => {
+        //reroute to /quiz/score page with score as a parameter
+        router.push(`/quiz/score/?s=${data.score}`);
       })
       .catch((error) => {
         console.error('Error scoring quiz:', error);
@@ -50,7 +52,7 @@ export default function Page({ params }) {
 
 
   return(
-    <div>
+    <div className="page page-resolve container">
       {quizData === null && <p>Loading...</p>}
 
       {quizData !== null && (
@@ -59,10 +61,12 @@ export default function Page({ params }) {
       <p>{quizData.description}</p>
       <div>
         {quizData.questions.map((question) => (
-          <div key={question.id}>
+          <div key={question.id} className="question">
             <p>{question.question}</p>
+            <div className="answers">
             {question.answers.map((answer) => (
-              <div key={answer.id}>
+              <div key={answer.id} className="answer">
+                <label>
                 <input
                   type="radio"
                   name={`question-${question.id}`}
@@ -71,9 +75,10 @@ export default function Page({ params }) {
                     handleAnswerSelection(question.id, answer.id)
                   }
                 />
-                <label>{answer.answer}</label>
+                {answer.answer}</label>
               </div>
             ))}
+            </div>
           </div>
         ))}
       </div>

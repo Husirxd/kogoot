@@ -7,14 +7,13 @@ const QuizTile = ({ quiz }) => {
     const [category, setCategory] = useState(null);
 
     useEffect(() => {
-        console.log(quiz);
         setCategory(quiz.categories[0]);
     }
     , []);
 
     return (
         <div className={`quiz-tile quiz--${category?.category}`}>
-            <dic class="quiz-category pile">{category && category?.categoryName || "Quiz"}</dic>
+            <div class="quiz-category pile">{category && category?.categoryName || "Quiz"}</div>
             <div className='quiz-image'></div>
             <h2><Link href={`/quiz/${quiz.id}`}>{quiz.title}</Link></h2>
             <p>{quiz.description}</p>

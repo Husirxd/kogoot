@@ -1,0 +1,20 @@
+@import "../mixin.scss";
+.page--quizzes{
+    margin-bottom: 4rem;
+    .flex{
+        button{
+          margin-top: 2rem;
+        }
+    }
+}
+.quizzes-grid{
+    margin:3rem 0;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    @include to(450px){
+        grid-template-columns:1fr;
+    }
+    gap: 1rem;
+
+}

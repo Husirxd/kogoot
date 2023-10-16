@@ -13,4 +13,7 @@ export class Category {
   @Column()
   categoryName: string;
 
+  @ManyToMany(() => Quiz)
+  @JoinTable()
+  quizzes: Quiz[];
 }

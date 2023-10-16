@@ -80,9 +80,18 @@ export class QuizService {
     .getOne();
   }
 
-  async getQuizzes(limit: number): Promise<Quiz[]> {
+  async getQuizzes(limit: number, offset: number): Promise<Quiz[]> {
     return this.quizRepository.createQueryBuilder('quiz')
     .limit(limit)
+    .offset(offset)
+    .leftJoinAndSelect('quiz.categories', 'categories')
+    .orderBy('quiz.createdAt', 'DESC')
+    .getMany();
+  }
+
+  async searchQuizzes(search: string): Promise<Quiz[]> {
+    return this.quizRepository.createQueryBuilder('quiz')
+    .where('quiz.title LIKE :search', { search: `%${search}%` })
     .leftJoinAndSelect('quiz.categories', 'categories')
     .orderBy('quiz.createdAt', 'DESC')
     .getMany();

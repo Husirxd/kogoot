@@ -1,3 +1,4 @@
+@import "../mixin.scss";
 .login-form{
     margin-top: 10%;
     padding: 2rem;
@@ -5,6 +6,10 @@
     height: fit-content;
     width: fit-content;
     min-width: 500px;
+    @include to(768px){
+        min-width:unset;
+        width:100%;
+    }
     box-shadow: 4px 4px 0px #222;
     button{
         margin-top: 1rem;
