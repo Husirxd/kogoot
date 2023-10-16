@@ -1,0 +1,35 @@
+.page-create{
+    margin-bottom: 2rem;
+    margin-top: 3rem;
+    .questions{
+        margin-top: 2rem;
+        h2{
+            filter: drop-shadow(2px 2px 0px #ffcc00);
+            font-size: 2rem;
+        }
+    }
+    .question{
+        margin: 1rem 0 1rem;
+        background: white;
+        border: 3px solid #222;
+        box-shadow: 4px 4px 0px #222;
+        max-width: 700px;
+        padding: 1rem;
+    }
+    .answers{
+        margin-top: 1rem;
+    }
+    .answer{
+        display: flex;
+        span{
+            display: flex;
+            align-items: center;
+        }
+        margin-bottom: 1rem;
+    }
+    label{
+        display: flex;
+        flex-direction: column;
+        max-width: 700px;
+    }
+}
