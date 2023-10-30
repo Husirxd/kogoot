@@ -2,13 +2,26 @@
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { CreateQuestionDto } from '../../question/dto/create-question.dto';
 import { CreateCategoryDto } from 'src/category/dto/create-category.dto';
-export class CreateQuizDto {
-  title: string;
-  description: string;
-  status: string;
-  questions: CreateQuestionDto[];
-  userId: number;
-  categoriesIds: number[];
-}
+import { ApiProperty } from '@nestjs/swagger';
 
+  export class CreateQuizDto {
+    @ApiProperty()
+    title: string;
+
+    @ApiProperty()
+    description: string;
+
+    @ApiProperty()
+    status: string;
+
+    @ApiProperty({ type: [CreateQuestionDto] })
+    questions: CreateQuestionDto[];
+
+    @ApiProperty()
+    userId: number;
+
+    @ApiProperty({ type: [Number] })
+    categoriesIds: number[];
+  
+}
 
