@@ -14,7 +14,9 @@
     transition: all 0.2s ease-in-out;
     cursor: pointer;
     position: relative;
-
+    p{
+        text-align: center;
+    }
     .quiz-category{
         position: absolute;
         top: 2rem;

@@ -56,7 +56,7 @@ const LoginPage = () => {
 
   return (
     <div className="page container">
-      {isError && <div class="notification notification--error">{errorMessage}</div>}
+      {isError && <div className="notification notification--error">{errorMessage}</div>}
       <div className="login-form">
       <h1>Login</h1>
       <form onSubmit={handleSubmit} >
