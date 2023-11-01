@@ -23,13 +23,13 @@ export class Quiz {
   @Column()
   status: string;
 
-  @OneToMany(() => Question, (question) => question.quiz)
+  @OneToMany(() => Question, (question) => question.quiz,  { cascade: true, onDelete: 'CASCADE' })
   questions: Question[];
 
-  @ManyToOne(() => User, (user) => user.quizzes)
+  @ManyToOne(() => User, (user) => user.quizzes, { cascade: true, onDelete: 'CASCADE' })
   user: User;
 
-  @ManyToMany(() => Category)
+  @ManyToMany(() => Category,  { cascade: true, onDelete: 'CASCADE' })
   @JoinTable()
   categories: Category[];
 }

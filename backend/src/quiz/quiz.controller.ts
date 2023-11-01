@@ -1,5 +1,5 @@
 // quiz.controller.ts
-import { Controller, Post, Body, Get, Param, Query, Put } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, Query, Put, Delete } from '@nestjs/common';
 import { QuizService } from './quiz.services';
 import { CreateQuizDto } from './dto/create-quiz.dto';
 import { ValidateQuizDto } from './dto/validate-quiz.dto';
@@ -19,6 +19,18 @@ export class QuizController {
     return quiz;
   }
 
+  @Put()
+  async updateQuiz(@Body() updateQuizDto: UpdateQuizDto) {
+    const quiz = await this.quizService.updateQuiz(updateQuizDto);
+    return quiz;
+  }
+
+  @Delete(':uid')
+  async deleteQuiz(@Param('uid') uid: string) {
+    const quiz = await this.quizService.deleteQuiz(uid);
+    return quiz;
+  }
+
   @Get('single/:quizId')
   async getQuiz(@Param('quizId') quizId: number) {
     const quiz = await this.quizService.getQuiz(quizId);
@@ -31,11 +43,7 @@ export class QuizController {
     return quiz;
   }
 
-  @Put()
-  async updateQuiz(@Body() updateQuizDto: UpdateQuizDto) {
-    const quiz = await this.quizService.updateQuiz(updateQuizDto);
-    return quiz;
-  }
+
 
   @Get("user/:userId")
   async getQuizzesByUser(@Param('userId') userId: number) {

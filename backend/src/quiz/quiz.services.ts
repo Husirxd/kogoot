@@ -202,5 +202,16 @@ export class QuizService {
     return results;
   }
 
+  async deleteQuiz(uid: string): Promise<Quiz> {
+    //delete quiz along with questions and answers 
+    const quiz = await this.quizRepository.createQueryBuilder('quiz')
+    .where('quiz.uid = :uid', { uid })
+    .leftJoinAndSelect('quiz.questions', 'questions')
+    .leftJoinAndSelect('questions.answers', 'answers')
+    .getOne();
 
+    await this.quizRepository.remove(quiz);
+    return quiz;
+    
+  }
 }

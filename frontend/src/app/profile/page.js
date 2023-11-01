@@ -41,6 +41,21 @@ export default function ProfilePage(){
         })
     }, [user]);
 
+    const handleDelete = (uid) =>{
+        fetch(`http://localhost:8080/quizzes/${uid}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then((res)=>res.json())
+        .then((data)=>{
+            console.log(data);
+        })
+        .catch((err)=>{
+            console.log(err);
+        })
+    }
 
     return (
         <>
@@ -58,6 +73,8 @@ export default function ProfilePage(){
                         <h2>{quiz.title}</h2>
                         <p>{quiz.description}</p>
                         <Link href={`/quiz/edit/${quiz.uid}`}>Edit</Link>
+                        <Link href={`/quiz/${quiz.uid}`}>Start</Link>
+                        <button onClick={(e)=>handleDelete(quiz.uid)}>Delete</button>
                     </div>
                 )
             })}
