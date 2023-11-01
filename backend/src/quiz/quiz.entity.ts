@@ -8,6 +8,9 @@ export class Quiz {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column({ unique: true })
+  uid: string;
+
   @Column()
   title: string;
 

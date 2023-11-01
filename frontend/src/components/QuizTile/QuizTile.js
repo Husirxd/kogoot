@@ -13,7 +13,7 @@ const QuizTile = ({ quiz }) => {
 
     return (
         <div className={`quiz-tile quiz--${category?.category}`}>
-            <div class="quiz-category pile">{category && category?.categoryName || "Quiz"}</div>
+            <div className="quiz-category pile">{category && category?.categoryName || "Quiz"}</div>
             <div className='quiz-image'></div>
             <h2><Link href={`/quiz/${quiz.id}`}>{quiz.title}</Link></h2>
             <p>{quiz.description}</p>

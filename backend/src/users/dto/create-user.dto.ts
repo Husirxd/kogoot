@@ -7,4 +7,6 @@ export class CreateUserDto {
     password: string;
     @ApiProperty()
     nickname?: string;
+    @ApiProperty()
+    uid: string;
 }

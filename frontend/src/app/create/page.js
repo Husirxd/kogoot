@@ -1,15 +1,20 @@
 "use client"
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { v4 } from "uuid";
 import "./create.scss"
 export default function CreateQuiz() {
     const router = useRouter()
- 
+    const [user, setUser] = useState(null);
     useEffect(() => {
 
         const accessToken = localStorage.getItem('token');
         if(!accessToken) {
             router.push('/account');
+        }
+        setUser(localStorage.getItem('user'));  
+        if(!user){
+            return;
         }
 
     }, []);
@@ -17,9 +22,10 @@ export default function CreateQuiz() {
 
     const [quizData, setQuizData] = useState({
         title: '',
+        uid: v4(),
         description: '',
         status: 'published',
-        userId: 2, // You can retrieve this value from local storage or a cookie
+        userId: user.id,
         categoriesIds: [],
         questions: [
             {
@@ -68,7 +74,7 @@ export default function CreateQuiz() {
         const accessToken = localStorage.getItem('token');
         // Send the JSON data to the '/quizzes' endpoint using fetch
         try {
-            const response = await fetch('http://localhost:3000/quizzes', {
+            const response = await fetch('http://localhost:8080/quizzes', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

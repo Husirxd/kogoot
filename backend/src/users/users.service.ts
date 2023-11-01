@@ -22,9 +22,14 @@ export class UsersService {
     .getOne();
   }
 
-  async createUser(email: string, password: string, nickname: string): Promise<any> {
+  async getUser(id: number): Promise<any> {
+    const user = this.usersRepository.findOne({where: {id: id}});
+    return user;
+  }
+
+  async createUser(email: string, password: string, nickname: string, uid: string): Promise<any> {
     password = await bcrypt.hash(password, 10);
-    const user = this.usersRepository.create({ email, password, nickname });
+    const user = this.usersRepository.create({ email, password, nickname, uid });
     await this.usersRepository.save(user);
     
     const newUser = {

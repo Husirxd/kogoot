@@ -6,6 +6,7 @@ import { Transaction, In } from 'typeorm';
 import { Quiz } from './quiz.entity';
 import { Question } from '../question/question.entity';
 import { CreateQuizDto } from './dto/create-quiz.dto';
+import { UpdateQuizDto } from './dto/update-quiz.dto';
 import { ValidateQuizDto } from './dto/validate-quiz.dto';
 import { Answer } from 'src/answer/answer.entity';
 import { User } from 'src/users/users.entity';
@@ -67,16 +68,72 @@ export class QuizService {
     );
 
     await this.answerRepository.save(answers.flat());
-
     return quiz;
   }
 
+
+  async updateQuiz(updateQuizDto: UpdateQuizDto): Promise<Quiz | null> {
+    const quizId = updateQuizDto.id; // Assuming you have a way to identify the quiz to update
+    const quiz = await this.quizRepository.findOne({where: {id: quizId}});
+  
+    if (!quiz) {
+      return null; // Quiz not found
+    }
+  
+    // You can add validation and error handling for permissions or other criteria here
+  
+    // Update the basic quiz properties
+    quiz.title = updateQuizDto.title;
+    quiz.description = updateQuizDto.description;
+    quiz.status = updateQuizDto.status;
+
+    // Update the categories
+    // TODO:: add categories to dto
+    // const categoryIds = updateQuizDto.categoriesIds;
+    // const categories = await this.categoryRepository.findBy({id: In(categoryIds)});
+    // quiz.categories = categories;
+
+
+
+    //Update question 
+    const questions = updateQuizDto.questions.map(question =>
+      this.questionRepository.create({
+        ...question,
+        quiz,
+      }),
+    );
+    await this.questionRepository.save(questions);
+  
+    // Update the answers
+    const answers = questions.map(question =>
+      question.answers.map(answer =>
+        this.answerRepository.create({
+          ...answer,
+          question,
+        }),
+      ),
+    );
+    await this.answerRepository.save(answers.flat());
+    await this.quizRepository.save(quiz);
+  
+    return quiz;
+  }
 
   async getQuiz(quizId: Number): Promise<Quiz> {
     return this.quizRepository.createQueryBuilder('quiz')
     .where('quiz.id = :quizId', { quizId })
     .leftJoinAndSelect('quiz.questions', 'questions')
     .leftJoinAndSelect('questions.answers', 'answers')
+    .leftJoinAndSelect('quiz.categories', 'categories')
+    .getOne();
+  }
+
+  async getQuizByUid(uid: string): Promise<Quiz> {
+    return this.quizRepository.createQueryBuilder('quiz')
+    .where('quiz.uid = :uid', { uid })
+    .leftJoinAndSelect('quiz.questions', 'questions')
+    .leftJoinAndSelect('questions.answers', 'answers')
+    .leftJoinAndSelect('quiz.categories', 'categories')
     .getOne();
   }
 

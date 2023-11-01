@@ -1,22 +1,24 @@
 // pages/login.js
 "use client"
 import { useState } from 'react';
-
+import { v4 } from "uuid";
 const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [nickname, setNickname] = useState('');
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         const payload = {
             email,
             password,
-            nickname
+            nickname,
+            uid: v4(),
         };
 
         try {
-            const response = await fetch('http://localhost:3000/users/create', {
+            const response = await fetch('http://localhost:8080/users/create', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

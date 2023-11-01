@@ -1,8 +1,15 @@
 // create-quiz.dto.ts
-import { CreateQuestionDto } from '../../question/dto/create-question.dto';
+import { UpdateQuestionDto } from '../../question/dto/update-question.dto';
 import { ApiProperty } from '@nestjs/swagger';
 
-  export class CreateQuizDto {
+  export class UpdateQuizDto {
+
+    @ApiProperty()
+    id: number;
+
+    @ApiProperty()
+    uid: string;
+
     @ApiProperty()
     title: string;
 
@@ -12,8 +19,8 @@ import { ApiProperty } from '@nestjs/swagger';
     @ApiProperty()
     status: string;
 
-    @ApiProperty({ type: [CreateQuestionDto] })
-    questions: CreateQuestionDto[];
+    @ApiProperty({ type: [UpdateQuizDto] })
+    questions: UpdateQuestionDto[];
 
     @ApiProperty()
     userId: number;
@@ -21,7 +28,6 @@ import { ApiProperty } from '@nestjs/swagger';
     @ApiProperty({ type: [Number] })
     categoriesIds: number[];
   
-    @ApiProperty()
-    uid: string;
+
 }
 
