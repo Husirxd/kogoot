@@ -25,7 +25,7 @@ export default function CreateQuiz() {
         uid: v4(),
         description: '',
         status: 'published',
-        userId: user.id,
+        userId: user?.id,
         categoriesIds: [],
         questions: [
             {
@@ -71,6 +71,7 @@ export default function CreateQuiz() {
     };
 
     const handleSubmit = async () => {
+
         const accessToken = localStorage.getItem('token');
         // Send the JSON data to the '/quizzes' endpoint using fetch
         try {

@@ -65,6 +65,7 @@ export default function ProfilePage(){
             <h2>Hello: {user?.nickname}</h2>
         </div>
         <div className="container quizzes-list">
+            <Link href={`/create`}>Create New!</Link>
             {quizzes && quizzes.map((quiz)=>{
                 return (
                     <div className="quiz-tile">

@@ -9,7 +9,7 @@ export default function Page({ params }) {
   const router = useRouter();
 
   useEffect(() => {
-    fetch("http://localhost:3000/quizzes/single/"+params.id)
+    fetch("http://localhost:8080/quizzes/single/"+params.id)
     .then((res)=>res.json())
     .then((data)=>{
       setQuizData(data)
@@ -31,7 +31,7 @@ export default function Page({ params }) {
     };
     // Send the JSON object to the server for scoring (you'll need to implement this part on the server)
     // Example AJAX request
-    fetch('http://localhost:3000/quizzes/validate', {
+    fetch('http://localhost:8080/quizzes/validate', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
