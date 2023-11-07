@@ -11,17 +11,21 @@ import { FilesInterceptor } from '@nestjs/platform-express';
 import { Express } from 'express';
 import { UseInterceptors } from '@nestjs/common';
 import { AnyFilesInterceptor } from '@nestjs/platform-express';
+import { ImageService } from '../image/image.service';
 
 import { v4 as uuidv4 } from 'uuid';
 import * as path from 'path';
 import * as fs from 'fs';
 @Controller('quizzes')
 export class QuizController {
-  constructor(private readonly quizService: QuizService) {
+  constructor(
+    private readonly quizService: QuizService,
+
+    ) {
     
   }
   
-  // @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard)
   @Post()
   @UseInterceptors(AnyFilesInterceptor())
   async createQuiz(@Body() createQuizDto: CreateQuizDto, @UploadedFiles() files: Array<Express.Multer.File>) {
@@ -29,21 +33,7 @@ export class QuizController {
 
     let images = [];
 
-    files.map(file => {
-      let questionId = file.fieldname.split('-')[1];
-      const filename = `${uuidv4()}${path.extname(file.originalname)}`;
-      const filePath = path.join(__dirname, '..','..', 'uploads', filename);
-      if (!fs.existsSync(path.join(__dirname, '..', '..', 'uploads'))) {
-        fs.mkdirSync(path.join(__dirname, '..','..', 'uploads'));
-      }
-      try {
-        fs.writeFileSync(filePath, file.buffer);
-        images[questionId] = filePath;
-        
-      } catch (error) {
-          console.log(error);
-      }
-    });
+    images = await this.quizService.uploadImages(files);
 
     const quiz = await this.quizService.createQuiz(createQuizDto, images);
     return quiz;
@@ -104,18 +94,6 @@ export class QuizController {
 
     const quiz = await this.quizService.validateQuiz(body);
     return quiz;
-  }
-
-
-  //TODO: Przeniesc 
-  @Get("question/image/:id")
-  async getAvatar(@Param('id') id: number,  @Res({passthrough:true}) res: any) { 
-
-      const question = await this.quizService.getQuestion(id);
-
-      res.set('Content-Type', 'image/png');
-      const file = fs.createReadStream(path.join(question.image));
-      return new StreamableFile(file);
   }
 
 }

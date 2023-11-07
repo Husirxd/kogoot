@@ -8,6 +8,7 @@ import { Question } from 'src/question/question.entity';
 import { Answer } from 'src/answer/answer.entity';
 import { User } from 'src/users/users.entity';
 import { Category } from 'src/category/category.entity';
+import { ImageModule } from 'src/image/image.module';
 @Module({
   imports: [
   TypeOrmModule.forFeature([Quiz]),
@@ -15,8 +16,10 @@ import { Category } from 'src/category/category.entity';
   TypeOrmModule.forFeature([Answer]),
   TypeOrmModule.forFeature([User]),
   TypeOrmModule.forFeature([Category]),
+  ImageModule,
   ],
   controllers: [QuizController],
   providers: [QuizService],
+  exports: [QuizService],
 })
 export class QuizModule {}

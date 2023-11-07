@@ -12,6 +12,7 @@ import { Answer } from 'src/answer/answer.entity';
 import { User } from 'src/users/users.entity';
 import { Category } from 'src/category/category.entity';
 import { v4 as uuidv4 } from 'uuid';
+import { ImageService } from '../image/image.service';
 @Injectable()
 export class QuizService {
   constructor(
@@ -29,6 +30,8 @@ export class QuizService {
 
     @InjectRepository(Category)
     private readonly categoryRepository: Repository<Category>,
+
+    private readonly imageService: ImageService,
   ) {}
 
   async createQuiz(createQuizDto: CreateQuizDto, images: Array<string>): Promise<Quiz> {
@@ -123,6 +126,15 @@ export class QuizService {
     await this.quizRepository.save(quiz);
   
     return quiz;
+  }
+
+  async uploadImages(files: Array<Express.Multer.File>): Promise<Array<string>> {
+    let images = [];
+    for (const file of files) {
+      const image = await this.imageService.uploadImage(file);
+      images.push(image);
+    }
+    return images;
   }
 
   async getQuiz(quizId: Number): Promise<Quiz> {
@@ -221,8 +233,4 @@ export class QuizService {
     
   }
 
-  async getQuestion(questionId: number): Promise<any> {
-    const question = await this.questionRepository.findOne({where: {id: questionId}});
-    return question;
-  }
 }

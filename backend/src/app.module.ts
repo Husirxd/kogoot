@@ -10,6 +10,7 @@ import { AnswerModule } from './answer/answer.module';
 import { AuthModule } from './auth/auth.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { ImageModule } from './image/image.module';
 @Module({
   imports: [
 
@@ -25,7 +26,7 @@ import { join } from 'path';
       synchronize: true,
       autoLoadEntities: true,
     }),
-    QuizModule, QuestionModule, UsersModule, CategoryModule, AnswerModule, AuthModule
+    QuizModule, QuestionModule, UsersModule, CategoryModule, AnswerModule, AuthModule, ImageModule
   ],
   controllers: [AppController],
   providers: [AppService],
