@@ -23,6 +23,9 @@ export class Quiz {
   @Column()
   status: string;
 
+  @Column({ nullable: true })
+  image: string;
+
   @OneToMany(() => Question, (question) => question.quiz,  {onDelete: 'CASCADE' })
   questions: Question[];
 

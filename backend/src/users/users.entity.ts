@@ -18,6 +18,9 @@ export class User {
   @Column()
   nickname: string;
 
+  @Column({ nullable: true })
+  avatar: string;
+
   @OneToMany(() => Quiz, (quiz) => quiz.user)
   quizzes: Quiz[];
 }

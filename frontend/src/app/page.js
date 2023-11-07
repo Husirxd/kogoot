@@ -12,7 +12,7 @@ export default async function Home() {
       <section className='container quizzes quizzes'>
         <div className='quizzes__grid'>  
         {posts.map((post) => (
-          <QuizTile key={post.id} quiz={post} />
+          <QuizTile key={post?.id} quiz={post} />
         ))}
         </div>
       </section>
@@ -45,7 +45,7 @@ export default async function Home() {
 }
 
 const getPosts = async ()  => {
-  const data = await fetch(process.env.KOGOOT_BACK+'/quizzes?limit=3');
+  const data = await fetch('http:/localhost:8080/quizzes?limit=3');
   const posts = await data.json();
   return posts;
 };

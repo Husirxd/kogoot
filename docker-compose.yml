@@ -24,8 +24,10 @@ services:
     depends_on:
       - db
     volumes:
-      - ./backend/src:/app/src
+      - ./backend/uploads:/app/uploads/
+      - ./backend/src:/app/src # Path to your app source code
 
+  
   frontend: 
     build:
       context: ./frontend # Path to your Next.js app
@@ -46,3 +48,4 @@ services:
       - '5050:80'
     depends_on:
       - db
+

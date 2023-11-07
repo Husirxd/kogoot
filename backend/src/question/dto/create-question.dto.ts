@@ -4,6 +4,7 @@ export class CreateQuestionDto {
     @ApiProperty()
     question: string;
 
+
     @ApiProperty()
     answers: CreateAnswerDto[];
   }

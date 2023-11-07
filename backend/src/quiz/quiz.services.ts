@@ -11,7 +11,7 @@ import { ValidateQuizDto } from './dto/validate-quiz.dto';
 import { Answer } from 'src/answer/answer.entity';
 import { User } from 'src/users/users.entity';
 import { Category } from 'src/category/category.entity';
-
+import { v4 as uuidv4 } from 'uuid';
 @Injectable()
 export class QuizService {
   constructor(
@@ -31,12 +31,14 @@ export class QuizService {
     private readonly categoryRepository: Repository<Category>,
   ) {}
 
-  async createQuiz(createQuizDto: CreateQuizDto): Promise<Quiz> {
+  async createQuiz(createQuizDto: CreateQuizDto, images: Array<string>): Promise<Quiz> {
 
     const userId = createQuizDto.userId;
+    createQuizDto.uid = uuidv4();
+
+    if(!userId || userId == undefined) return;
     const user = await this.userRepository.find({where: {id: userId}});
     if(!user) return null;
-  
     const categoryIds = createQuizDto.categoriesIds;
     const categories = await this.categoryRepository.findBy({id: In(categoryIds)});
     console.log(categories);
@@ -45,24 +47,28 @@ export class QuizService {
       user: user[0],
       categories: categories,
       });
-  
+      console.log(images);
     await this.quizRepository.save(quiz);   
-
-
-    const questions = createQuizDto.questions.map(question =>
+    const questions = createQuizDto.questions.map((question,index) =>
       this.questionRepository.create({
         ...question,
+        image: images[index],
         quiz,
       }),
     );
-    await this.questionRepository.save(questions);
     
 
+
+    
+    await this.questionRepository.save(questions);
+
+
+    
     const answers = questions.map(question =>
       question.answers.map(answer =>
         this.answerRepository.create({
           ...answer,
-          question,
+          question
         }),
       ),
     );
@@ -213,5 +219,10 @@ export class QuizService {
     await this.quizRepository.remove(quiz);
     return quiz;
     
+  }
+
+  async getQuestion(questionId: number): Promise<any> {
+    const question = await this.questionRepository.findOne({where: {id: questionId}});
+    return question;
   }
 }

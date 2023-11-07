@@ -1,11 +1,13 @@
 // pages/login.js
 "use client"
+import "./create-account.scss";
 import { useState } from 'react';
-import { v4 } from "uuid";
+import Image from 'next/image';
 const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [nickname, setNickname] = useState('');
+    const [file, setFile] = useState(null);
     
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -14,25 +16,31 @@ const LoginPage = () => {
             email,
             password,
             nickname,
-            uid: v4(),
+            uid: '',
+            file
         };
 
         try {
+            console.log(payload);
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('email', email);
+            formData.append('password', password);
+            formData.append('nickname', nickname);
+
             const response = await fetch('http://localhost:8080/users/create', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(payload),
+                body: formData,
+                
             });
 
             if (response.ok) {
                 // Handle successful login here, e.g., redirect to a dashboard.
                 //get response token
                 const data = await response.json();
-                //save token to local storage
                 localStorage.setItem('userId', data.id);
                 localStorage.setItem('token', data.token);
+                //redirect to my-account
             } else {
                 // Handle login failure, e.g., display an error message.
             }
@@ -43,9 +51,9 @@ const LoginPage = () => {
     };
 
     return (
-        <div>
+        <div className='page container page-create-account create-account'>
             <h1>Login</h1>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} >
                 <div>
                     <label>Email</label>
                     <input
@@ -72,6 +80,12 @@ const LoginPage = () => {
                         onChange={(e) => setNickname(e.target.value)}
                         required
                     />
+                </div>
+                <div>
+                    <label>
+                        Avatar
+                    </label>
+                    <input type="file" name='file'  onChange={(e) => setFile(e.target.files[0])} />    
                 </div>
                 <button type="submit">Login</button>
             </form>

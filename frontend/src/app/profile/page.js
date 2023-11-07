@@ -3,12 +3,12 @@
 import "./profile.scss"
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 export default function ProfilePage(){
 
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [quizzes, setQuizzes] = useState([]);
-
     useEffect(() => {
         
         const userId = localStorage.getItem('userId');
@@ -20,6 +20,7 @@ export default function ProfilePage(){
         .then((res)=>res.json())
         .then((data)=>{
             setUser(data);
+            console.log(data);
         })
         .catch((err)=>{
             console.log(err);
@@ -61,11 +62,14 @@ export default function ProfilePage(){
         <>
         <div className="container profile">
         <h1>Your's Profile</h1>
+        <div className="profile-image">
+            <Image width={100} height={100} src={`http://localhost:8080/users/avatar/${user?.id}`} />
+        </div>
         {loading && <div>Loading...</div>}  
             <h2>Hello: {user?.nickname}</h2>
         </div>
         <div className="container quizzes-list">
-            <Link href={`/create`}>Create New!</Link>
+           <button><Link href={`/create`}>Create New!</Link></button>
             {quizzes && quizzes.map((quiz)=>{
                 return (
                     <div className="quiz-tile">

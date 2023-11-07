@@ -1,4 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
+import { Multer } from "multer";
 
 export class CreateUserDto {
     @ApiProperty()    
@@ -9,4 +10,7 @@ export class CreateUserDto {
     nickname?: string;
     @ApiProperty()
     uid: string;
+    @ApiProperty()
+    file?: any;
+    
 }

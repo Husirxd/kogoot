@@ -1,28 +1,35 @@
 "use client"
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { v4 } from "uuid";
 import "./create.scss"
 export default function CreateQuiz() {
     const router = useRouter()
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState();
     useEffect(() => {
 
         const accessToken = localStorage.getItem('token');
         if(!accessToken) {
             router.push('/account');
         }
-        setUser(localStorage.getItem('user'));  
+        setUser(localStorage.getItem('userId'));  
+
         if(!user){
             return;
         }
 
     }, []);
 
+    useEffect(() => {
+        if(!user){
+            return;
+        }
+        quizData.userId = user?.id;
+        console.log(user?.id);
+    }, [user]);
+
 
     const [quizData, setQuizData] = useState({
         title: '',
-        uid: v4(),
         description: '',
         status: 'published',
         userId: user?.id,
@@ -30,6 +37,7 @@ export default function CreateQuiz() {
         questions: [
             {
                 question: '',
+                image: '',
                 answers: [
                     {
                         answer: '',
@@ -47,6 +55,7 @@ export default function CreateQuiz() {
                 ...quizData.questions,
                 {
                     question: '',
+                    image: '',
                     answers: [
                         {
                             answer: '',
@@ -55,6 +64,7 @@ export default function CreateQuiz() {
                     ],
                 },
             ],
+
         });
     };
 
@@ -71,17 +81,39 @@ export default function CreateQuiz() {
     };
 
     const handleSubmit = async () => {
+        const formData = new FormData();
+        let userId = localStorage.getItem('userId');
+        formData.append('title', quizData.title);
+        formData.append('description', quizData.description);
+        formData.append('status', quizData.status);
+        formData.append('userId', userId);
+        formData.append('categoriesIds', quizData.categoriesIds);
+        quizData.questions.forEach((question, index) => {
+            formData.append(`questions[${index}][question]`, question.question);
+            formData.append(`questionsImage-${index}`, question.image);
+            question.answers.forEach((answer, answerIndex) => {
+
+                formData.append(`questions[${index}][answers][${answerIndex}][answer]`, answer.answer);
+                formData.append(`questions[${index}][answers][${answerIndex}][isCorrect]`, answer.isCorrect);
+            });
+        });
+
+        // Create a new FormData object and append the quizData to it
 
         const accessToken = localStorage.getItem('token');
+        console.log(quizData);
+        console.log(formData);
         // Send the JSON data to the '/quizzes' endpoint using fetch
         try {
             const response = await fetch('http://localhost:8080/quizzes', {
                 method: 'POST',
+                body: formData,
                 headers: {
-                    'Content-Type': 'application/json',
+                    //send files with form data
+                    // 'Content-Type': 'multipart/form-data',
+            
                     'Authorization': `Bearer ${accessToken}`,
                 },
-                body: JSON.stringify(quizData),
             });
             // Handle the response, get quizId and redirect to /quiz/[quizId]
             if (response.ok) {
@@ -146,12 +178,29 @@ export default function CreateQuiz() {
                                 }}
                             />
                         </label>
+                        <label>
+                            Image:
+                            <input
+                                type="file"
+                                name='file'
+                                onChange={(e) => {
+                                    //add image to images array
+                                    // const updatedImages = [...quizData.images];
+                                    // updatedImages[questionIndex] = e.target.files[0];
+                                    // setQuizData({ ...quizData, images: updatedImages });
+
+                                    const updatedQuestions = [...quizData.questions];
+                                    updatedQuestions[questionIndex].image = e.target.files[0];
+                                    setQuizData({ ...quizData, questions: updatedQuestions });
+
+                                }}
+                            />
+                        </label>
                         <div className='answers'>
                         {question.answers.map((answer, answerIndex) => (
                             <div key={answerIndex}>
-                                 Answer:
+                                Answer:
                                 <div className='answer'>
-                               
                                     <input
                                         type="text"
                                         value={answer.answer}
@@ -161,9 +210,7 @@ export default function CreateQuiz() {
                                             setQuizData({ ...quizData, questions: updatedQuestions });
                                         }}
                                     />
-
                                     <span>
-                                       
                                     <input
                                         type="checkbox"
                                         checked={answer.isCorrect}

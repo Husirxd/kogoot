@@ -1,11 +1,20 @@
 // quiz.controller.ts
-import { Controller, Post, Body, Get, Param, Query, Put, Delete } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, Query, Put, Delete, Res,  StreamableFile } from '@nestjs/common';
 import { QuizService } from './quiz.services';
 import { CreateQuizDto } from './dto/create-quiz.dto';
 import { ValidateQuizDto } from './dto/validate-quiz.dto';
 import { AuthGuard } from '../auth/auth.guard';
 import { UseGuards } from '@nestjs/common';
 import { UpdateQuizDto } from './dto/update-quiz.dto';
+import { UploadedFiles } from '@nestjs/common';
+import { FilesInterceptor } from '@nestjs/platform-express';
+import { Express } from 'express';
+import { UseInterceptors } from '@nestjs/common';
+import { AnyFilesInterceptor } from '@nestjs/platform-express';
+
+import { v4 as uuidv4 } from 'uuid';
+import * as path from 'path';
+import * as fs from 'fs';
 @Controller('quizzes')
 export class QuizController {
   constructor(private readonly quizService: QuizService) {
@@ -14,8 +23,29 @@ export class QuizController {
   
   // @UseGuards(AuthGuard)
   @Post()
-  async createQuiz(@Body() createQuizDto: CreateQuizDto) {
-    const quiz = await this.quizService.createQuiz(createQuizDto);
+  @UseInterceptors(AnyFilesInterceptor())
+  async createQuiz(@Body() createQuizDto: CreateQuizDto, @UploadedFiles() files: Array<Express.Multer.File>) {
+
+
+    let images = [];
+
+    files.map(file => {
+      let questionId = file.fieldname.split('-')[1];
+      const filename = `${uuidv4()}${path.extname(file.originalname)}`;
+      const filePath = path.join(__dirname, '..','..', 'uploads', filename);
+      if (!fs.existsSync(path.join(__dirname, '..', '..', 'uploads'))) {
+        fs.mkdirSync(path.join(__dirname, '..','..', 'uploads'));
+      }
+      try {
+        fs.writeFileSync(filePath, file.buffer);
+        images[questionId] = filePath;
+        
+      } catch (error) {
+          console.log(error);
+      }
+    });
+
+    const quiz = await this.quizService.createQuiz(createQuizDto, images);
     return quiz;
   }
 
@@ -75,4 +105,17 @@ export class QuizController {
     const quiz = await this.quizService.validateQuiz(body);
     return quiz;
   }
+
+
+  //TODO: Przeniesc 
+  @Get("question/image/:id")
+  async getAvatar(@Param('id') id: number,  @Res({passthrough:true}) res: any) { 
+
+      const question = await this.quizService.getQuestion(id);
+
+      res.set('Content-Type', 'image/png');
+      const file = fs.createReadStream(path.join(question.image));
+      return new StreamableFile(file);
+  }
+
 }
