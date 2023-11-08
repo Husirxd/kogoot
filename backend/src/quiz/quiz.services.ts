@@ -12,7 +12,7 @@ import { Answer } from 'src/answer/answer.entity';
 import { User } from 'src/users/users.entity';
 import { Category } from 'src/category/category.entity';
 import { v4 as uuidv4 } from 'uuid';
-import { ImageService } from '../image/image.service';
+import { FileService } from '../file/file.service';
 @Injectable()
 export class QuizService {
   constructor(
@@ -31,10 +31,10 @@ export class QuizService {
     @InjectRepository(Category)
     private readonly categoryRepository: Repository<Category>,
 
-    private readonly imageService: ImageService,
+    private readonly fileService: FileService,
   ) {}
 
-  async createQuiz(createQuizDto: CreateQuizDto, images: Array<string>): Promise<Quiz> {
+  async createQuiz(createQuizDto: CreateQuizDto, images: any): Promise<Quiz> {
 
     const userId = createQuizDto.userId;
     createQuizDto.uid = uuidv4();
@@ -44,10 +44,10 @@ export class QuizService {
     if(!user) return null;
     const categoryIds = createQuizDto.categoriesIds;
     const categories = await this.categoryRepository.findBy({id: In(categoryIds)});
-    console.log(categories);
     const quiz = this.quizRepository.create({
       ...createQuizDto,
       user: user[0],
+      image: images?.thumbnail,
       categories: categories,
       });
       console.log(images);
@@ -55,7 +55,7 @@ export class QuizService {
     const questions = createQuizDto.questions.map((question,index) =>
       this.questionRepository.create({
         ...question,
-        image: images[index],
+        image: images.questions[index],
         quiz,
       }),
     );
@@ -128,11 +128,20 @@ export class QuizService {
     return quiz;
   }
 
-  async uploadImages(files: Array<Express.Multer.File>): Promise<Array<string>> {
-    let images = [];
+  async uploadImages(files: Array<Express.Multer.File>): Promise<Object> {
+    let images = {
+      thumbnail: "",
+      questions: [],
+    };
     for (const file of files) {
-      const image = await this.imageService.uploadImage(file);
-      images.push(image);
+      console.log(file);
+      //const image = await this.imageService.uploadImage(file);
+      if(file.fieldname === "thumbnail"){
+        images.thumbnail = await this.fileService.uploadImage(file);
+      }else{
+        images.questions.push(await this.fileService.uploadImage(file));
+      }
+      //images.push(image);
     }
     return images;
   }

@@ -30,29 +30,28 @@ export class QuizController {
   @UseInterceptors(AnyFilesInterceptor())
   async createQuiz(@Body() createQuizDto: CreateQuizDto, @UploadedFiles() files: Array<Express.Multer.File>) {
 
-
-    let images = [];
-
-    images = await this.quizService.uploadImages(files);
-
+    let images = await this.quizService.uploadImages(files);
     const quiz = await this.quizService.createQuiz(createQuizDto, images);
     return quiz;
   }
 
   @Put()
   async updateQuiz(@Body() updateQuizDto: UpdateQuizDto) {
+
     const quiz = await this.quizService.updateQuiz(updateQuizDto);
     return quiz;
   }
 
   @Delete(':uid')
   async deleteQuiz(@Param('uid') uid: string) {
+
     const quiz = await this.quizService.deleteQuiz(uid);
     return quiz;
   }
 
   @Get('single/:quizId')
   async getQuiz(@Param('quizId') quizId: number) {
+    
     const quiz = await this.quizService.getQuiz(quizId);
     return quiz;
   }

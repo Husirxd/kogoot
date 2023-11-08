@@ -33,6 +33,7 @@ export default function CreateQuiz() {
         description: '',
         status: 'published',
         userId: user?.id,
+        thumbnail: '',
         categoriesIds: [],
         questions: [
             {
@@ -87,6 +88,7 @@ export default function CreateQuiz() {
         formData.append('description', quizData.description);
         formData.append('status', quizData.status);
         formData.append('userId', userId);
+        formData.append('thumbnail', quizData.thumbnail);
         formData.append('categoriesIds', quizData.categoriesIds);
         quizData.questions.forEach((question, index) => {
             formData.append(`questions[${index}][question]`, question.question);
@@ -148,7 +150,14 @@ export default function CreateQuiz() {
                         onChange={(e) => setQuizData({ ...quizData, description: e.target.value })}
                     />
                 </label>
-
+                <label>
+                    Thumbnail:
+                    <input
+                        type="file"
+                        name='thumbnail'
+                        onChange={(e) => setQuizData({ ...quizData, thumbnail: e.target.files[0] })}
+                    />
+                </label>
                 <label>
                     Categories:
                     <select

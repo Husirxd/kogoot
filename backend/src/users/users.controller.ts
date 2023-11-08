@@ -55,17 +55,5 @@ constructor(private readonly usersService: UsersService) {}
         return user;
     }
 
-    @Get("avatar/:id")
-    async getAvatar(@Param('id') id: number,  @Res({passthrough:true}) res: any) { 
-        const user = await this.usersService.getUser(id);
-        //return image from user.avatar path
-        if (!user.avatar) {
-          return null; 
-        }
-
-        res.set('Content-Type', 'image/png');
-        const file = fs.createReadStream(path.join(user.avatar));
-        return new StreamableFile(file);
-    }
 
 }

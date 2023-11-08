@@ -16,7 +16,7 @@ export default function ProfilePage(){
         if(!userId || userId == undefined){
             return;
         }
-        fetch(`http://localhost:8080/users/${userId}`)
+        fetch(`http://localhost:8080/image/user/${userId}`)
         .then((res)=>res.json())
         .then((data)=>{
             setUser(data);

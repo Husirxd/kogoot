@@ -59,6 +59,10 @@
         height: 130px;
         width: 100%;
         border-radius: 10px;
+        overflow: hidden;
+        img{
+            border-radius: 10px;
+        }
     }
     &.quiz--kuchnia{
         .quiz-image{
