@@ -1,6 +1,6 @@
 # KOGOOT
 ## a Web-based application supporting a creating and resolving tests process management
-![Alt text](readme/kogoot-hero.JPG)
+![Alt text](readme/kogoot.gif)
 ## Project Description
 Kahoot styled app create with NextJS & NestJS stack. The application allows you to create and solve simple quizzes based on a point system. Each question can have an unlimited number of answers. In the current version we propose to create only entertainment quizzes.
 
