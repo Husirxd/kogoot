@@ -63,7 +63,7 @@ export default function Page({ params }) {
         {quizData.questions.map((question) => (
           <div key={question.id} className="question">
             <p>{question.question}</p>
-            <Image src={`http://localhost:8080/quizzes/question/image/${question.id}`} width={500} height={500} />
+            <Image src={`http://localhost:8080/image/question/${question.id}`} width={500} height={500} />
             <div className="answers">
             {question.answers.map((answer) => (
               <div key={answer.id} className="answer">

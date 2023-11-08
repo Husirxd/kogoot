@@ -16,12 +16,12 @@ const centeringFactor = 0.0005;
 const visionRadius = 100;
 const separationRadius = 30;
 
-const avoidFactor = 0.04;
+const avoidFactor = 0.0075;
 
 const maxSpeed = 2;
 const minSpeed = 1;
 
-const boids = 100;
+const boids = 125;
 
 let closeBoids = [];
 
