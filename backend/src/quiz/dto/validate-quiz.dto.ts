@@ -1,26 +1,24 @@
 import { ApiProperty } from "@nestjs/swagger";
 
 
-
-
 class ValidateQuestionDto {
   @ApiProperty()
-  questionId: number; // ID of the question
+  questionId: number;
   
   @ApiProperty()
-  chosenAnswerId: number; // ID of the chosen answer
+  chosenAnswerId: number;
 }
 
 export class ValidateQuizDto {
     @ApiProperty()
-    quizId: number; // ID of the quiz
+    quizId: number; 
     
     @ApiProperty()
-    participantId?: number; // Name of the participant
+    participantId?: number;
     
     @ApiProperty({ type: [ValidateQuestionDto] })
     questions: {
-      questionId: number; // ID of the question
-      chosenAnswerId: number; // ID of the chosen answer
+      questionId: number;
+      chosenAnswerId: number;
     }[];
   }

@@ -7,11 +7,10 @@ import { AuthGuard } from '../auth/auth.guard';
 import { UseGuards } from '@nestjs/common';
 import { UpdateQuizDto } from './dto/update-quiz.dto';
 import { UploadedFiles } from '@nestjs/common';
-import { FilesInterceptor } from '@nestjs/platform-express';
-import { Express } from 'express';
 import { UseInterceptors } from '@nestjs/common';
 import { AnyFilesInterceptor } from '@nestjs/platform-express';
-import { ImageService } from '../image/image.service';
+import { ResultService } from 'src/result/result.service';
+
 
 import { v4 as uuidv4 } from 'uuid';
 import * as path from 'path';
@@ -20,7 +19,7 @@ import * as fs from 'fs';
 export class QuizController {
   constructor(
     private readonly quizService: QuizService,
-
+    private readonly resultService: ResultService
     ) {
     
   }
@@ -90,7 +89,6 @@ export class QuizController {
 
   @Post('validate')
   async validateQuiz(@Body() body: ValidateQuizDto) {
-
     const quiz = await this.quizService.validateQuiz(body);
     return quiz;
   }

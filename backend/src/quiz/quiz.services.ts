@@ -13,6 +13,7 @@ import { User } from 'src/users/users.entity';
 import { Category } from 'src/category/category.entity';
 import { v4 as uuidv4 } from 'uuid';
 import { FileService } from '../file/file.service';
+import { ResultService } from '../result/result.service';
 @Injectable()
 export class QuizService {
   constructor(
@@ -32,6 +33,7 @@ export class QuizService {
     private readonly categoryRepository: Repository<Category>,
 
     private readonly fileService: FileService,
+    private readonly resultService: ResultService,
   ) {}
 
   async createQuiz(createQuizDto: CreateQuizDto, images: any): Promise<Quiz> {
@@ -203,16 +205,17 @@ export class QuizService {
   async validateQuiz(body: ValidateQuizDto): Promise<Object> {
     let score = 0;
     let quizId = body.quizId;
-    const quiz = this.quizRepository.createQueryBuilder('quiz')
+    const quiz = await this.quizRepository.createQueryBuilder('quiz')
     .where('quiz.id = :quizId', { quizId })
     .leftJoinAndSelect('quiz.questions', 'questions')
     .leftJoinAndSelect('questions.answers', 'answers')
+    .leftJoinAndSelect('quiz.user', 'user')
     .getOne();
+    if(!quiz) return null;
 
     let results = {
       score: 0,
     };
-
     (await quiz).questions.forEach(question => {
       body.questions.forEach(bodyQuestion => {
         if (question.id === bodyQuestion.questionId) {
@@ -225,6 +228,7 @@ export class QuizService {
       });
     }); 
 
+    const result = await this.resultService.createResult(body, quiz, score);
     results.score = score;
     return results;
   }

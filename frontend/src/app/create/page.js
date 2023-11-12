@@ -103,8 +103,6 @@ export default function CreateQuiz() {
         // Create a new FormData object and append the quizData to it
 
         const accessToken = localStorage.getItem('token');
-        console.log(quizData);
-        console.log(formData);
         // Send the JSON data to the '/quizzes' endpoint using fetch
         try {
             const response = await fetch('http://localhost:8080/quizzes', {

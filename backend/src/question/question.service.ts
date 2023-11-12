@@ -14,7 +14,6 @@ export class QuestionService {
     
     async getQuestion(questionId: number): Promise<any> {
     const question = await this.questionRepository.findOne({where: {id: questionId}});
-    console.log(question);
     return question;
     }
 }

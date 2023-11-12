@@ -9,6 +9,7 @@ import { Answer } from 'src/answer/answer.entity';
 import { User } from 'src/users/users.entity';
 import { Category } from 'src/category/category.entity';
 import { FileModule } from 'src/file/file.module';
+import { ResultModule } from 'src/result/result.module';
 @Module({
   imports: [
   TypeOrmModule.forFeature([Quiz]),
@@ -16,7 +17,8 @@ import { FileModule } from 'src/file/file.module';
   TypeOrmModule.forFeature([Answer]),
   TypeOrmModule.forFeature([User]),
   TypeOrmModule.forFeature([Category]),
-  FileModule
+  FileModule,
+  ResultModule
   ],
   controllers: [QuizController],
   providers: [QuizService],

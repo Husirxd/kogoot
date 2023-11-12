@@ -8,10 +8,9 @@ import { UsersModule } from './users/users.module';
 import { CategoryModule } from './category/category.module';
 import { AnswerModule } from './answer/answer.module';
 import { AuthModule } from './auth/auth.module';
-import { ServeStaticModule } from '@nestjs/serve-static';
-import { join } from 'path';
 import { ImageModule } from './image/image.module';
 import { FileModule } from './file/file.module';
+import { ResultModule } from './result/result.module';
 @Module({
   imports: [
 
@@ -27,7 +26,7 @@ import { FileModule } from './file/file.module';
       synchronize: true,
       autoLoadEntities: true,
     }),
-    QuizModule, QuestionModule, UsersModule, CategoryModule, AnswerModule, AuthModule, ImageModule, FileModule
+    ResultModule, QuizModule, QuestionModule, UsersModule, CategoryModule, AnswerModule, AuthModule, ImageModule, FileModule
   ],
   controllers: [AppController],
   providers: [AppService],

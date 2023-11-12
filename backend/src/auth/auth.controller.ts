@@ -16,6 +16,13 @@ import { ApiResponse } from '@nestjs/swagger';
 export class AuthController {
   constructor(private authService: AuthService) {}
 
+  @Get('validate')
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(AuthGuard)
+  validate(@Request() req) {
+    return req.user;
+  }
+
   @ApiResponse({ status: 200, description: 'Returns access token as access_token'})
   @ApiResponse({ status: 401, description: 'Unauthorized'})
   @HttpCode(HttpStatus.OK)
@@ -23,6 +30,7 @@ export class AuthController {
   signIn(@Body() signInDto: Record<string, any>) {
     return this.authService.signIn(signInDto.email, signInDto.password);
   }
+
 
 
 }

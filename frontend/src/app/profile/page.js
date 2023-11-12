@@ -11,6 +11,12 @@ export default function ProfilePage(){
     const [quizzes, setQuizzes] = useState([]);
     useEffect(() => {
         
+        const accessToken = localStorage.getItem('token');
+        if(!accessToken) {
+            router.push('/account');
+        }
+        console.log(accessToken);
+
         const userId = localStorage.getItem('userId');
         console.log(userId);
         if(!userId || userId == undefined){

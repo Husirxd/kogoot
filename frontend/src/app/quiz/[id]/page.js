@@ -9,7 +9,7 @@ export default function Page({ params }) {
   const router = useRouter();
 
   useEffect(() => {
-    fetch("http://localhost:8080/quizzes/single/"+params.id)
+    fetch("http://localhost:8080/quizzes/uid/"+params.id)
     .then((res)=>res.json())
     .then((data)=>{
       setQuizData(data)
