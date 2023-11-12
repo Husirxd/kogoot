@@ -18,7 +18,7 @@ const QuizTile = ({ quiz }) => {
             <div className='quiz-image'><Link href={`/quiz/${quiz.uid}`}><Image width={405} height={200} src={`http://localhost:8080/image/quiz/${quiz.id}`}/></Link></div>
             <h2><Link href={`/quiz/${quiz.uid}`}>{quiz.title}</Link></h2>
             <p>{quiz.description}</p>
-            <Link href={`/quiz/${quiz.uid}`}><button>Start</button></Link>
+            <Link href={`/quiz/${quiz.uid}`}><button className='cta-button'>Start</button></Link>
         </div>
     )
 

@@ -16,6 +16,7 @@ import { ApiResponse } from '@nestjs/swagger';
 export class AuthController {
   constructor(private authService: AuthService) {}
 
+  @ApiResponse({ status: 200, description: 'Returns users request object'})
   @Get('validate')
   @HttpCode(HttpStatus.OK)
   @UseGuards(AuthGuard)

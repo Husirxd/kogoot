@@ -19,7 +19,8 @@ export class ImageController {
 
     
   @Get("question/:id")
-  async getAvatar(@Param('id') id: number,  @Res({passthrough:true}) res: any) { 
+  async getAvatar(@Param('id') id: number | null,  @Res({passthrough:true}) res: any) { 
+      if(id === 0 || id === null) return;
       const question = await this.questionService.getQuestion(id);
       res.set('Content-Type', 'image/png');
       const file = fs.createReadStream(path.join(question.image));
@@ -27,7 +28,8 @@ export class ImageController {
   }
 
   @Get("user/:id")
-  async getUserAvatar(@Param('id') id: number,  @Res({passthrough:true}) res: any) { 
+  async getUserAvatar(@Param('id') id: number | null | undefined,  @Res({passthrough:true}) res: any) { 
+      if(id === 0 || id === null ||  id === undefined) return;
       const user = await this.usersService.getUser(id);
       res.set('Content-Type', 'image/png');
       const file = fs.createReadStream(path.join(user.avatar));
@@ -35,9 +37,11 @@ export class ImageController {
   }
   
   @Get("quiz/:id")
-  async getQuizAvatar(@Param('id') id: number,  @Res({passthrough:true}) res: any) { 
+  async getQuizAvatar(@Param('id') id: number | null,  @Res({passthrough:true}) res: any) { 
+      if(id === 0 || id === null) return;
       const quiz = await this.quizService.getQuiz(id);
       res.set('Content-Type', 'image/png');
+      if(!quiz.image) return;
       const file = fs.createReadStream(path.join(quiz.image));
       return new StreamableFile(file);
   }

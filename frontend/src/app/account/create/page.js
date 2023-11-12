@@ -87,7 +87,7 @@ const LoginPage = () => {
                     </label>
                     <input type="file" name='file'  onChange={(e) => setFile(e.target.files[0])} />    
                 </div>
-                <button type="submit">Login</button>
+                <button className="cta-button" type="submit">Login</button>
             </form>
         </div>
     );

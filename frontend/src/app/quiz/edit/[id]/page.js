@@ -106,7 +106,7 @@ export default function EditQuizPage({params}) {
 
                     })}
                     <h3>Hey you. Nice quiz. Create it?</h3>
-                    <button type="button" onClick={handleSubmit}>Yea, why not</button>
+                    <button type="button"  className="cta-button" onClick={handleSubmit}>Yea, why not</button>
                 
                 </form>
             </div>

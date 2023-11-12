@@ -232,18 +232,18 @@ export default function CreateQuiz() {
                             </div>
                         ))}
                         </div>
-                        <button type="button" onClick={() => handleAnswerAdd(questionIndex)}>
+                        <button  className="cta-button" type="button" onClick={() => handleAnswerAdd(questionIndex)}>
                             Add New Answer
                         </button>
                     </div>
                 ))}
                 </div>
-                <button type="button" onClick={handleQuestionAdd}>
+                <button className="cta-button" type="button" onClick={handleQuestionAdd}>
                     Add New Question
                 </button>
                 <div className='flex flex--center flex--column'>
                 <h3>Hey you. Nice quiz. Create it?</h3>
-                <button type="button" onClick={handleSubmit}>Yea, why not</button>
+                <button className="cta-button" type="button"  onClick={handleSubmit}>Yea, why not</button>
                 </div>
             </form>
             </div>

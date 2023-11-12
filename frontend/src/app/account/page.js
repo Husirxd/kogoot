@@ -80,7 +80,7 @@ const LoginPage = () => {
 
           />
         </div>
-        <button type="submit">Login</button>
+        <button className="cta-button" type="submit">Login</button>
       </form>
       </div>
     </div>

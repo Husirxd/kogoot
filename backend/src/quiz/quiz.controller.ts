@@ -34,6 +34,7 @@ export class QuizController {
     return quiz;
   }
 
+  @UseGuards(AuthGuard)
   @Put()
   async updateQuiz(@Body() updateQuizDto: UpdateQuizDto) {
 
@@ -41,6 +42,7 @@ export class QuizController {
     return quiz;
   }
 
+  @UseGuards(AuthGuard)
   @Delete(':uid')
   async deleteQuiz(@Param('uid') uid: string) {
 

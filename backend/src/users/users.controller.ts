@@ -20,28 +20,18 @@ constructor(private readonly usersService: UsersService) {}
     @Post("create")
     @UseInterceptors(FileInterceptor('file'))
     async createUser(@Body() body: CreateUserDto,  @UploadedFile() file: Express.Multer.File){
-        //get file from body   
-       
-        //create file name
-        
         
         const filename = `${uuidv4()}${path.extname(file.originalname)}`;
-        //create file path
-   
         const filePath = path.join(__dirname, '..','..', 'uploads', filename);
-        //if path dont exist create it
         if (!fs.existsSync(path.join(__dirname, '..', '..', 'uploads'))) {
           fs.mkdirSync(path.join(__dirname, '..','..', 'uploads'));
         }
         try {
-          // Save the file to the specified path
-
           fs.writeFileSync(filePath, file.buffer);
 
         } catch (error) {
             console.log(error);
         }
-        console.log(filePath);
 
         let uid = uuidv4();
         const user = await this.usersService.createUser(body.email, body.password, body.nickname, uid, filePath);

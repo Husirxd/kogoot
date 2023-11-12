@@ -106,7 +106,7 @@ const Page = () =>{
         ))}
       
         </div>
-        <div className='flex flex--center'><button onClick={handleLoadMore} disabled={!hasMore || loading}>Load More</button></div>
+        <div className='flex flex--center'><button className="cta-button" onClick={handleLoadMore} disabled={!hasMore || loading}>Load More</button></div>
     </div>
     );
 }
