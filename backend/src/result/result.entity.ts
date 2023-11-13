@@ -22,6 +22,9 @@ export class Result {
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     participatedAt: Date;
 
+    @Column()
+    quizUid: string;
+
     @ManyToOne(() => User)
     author: User;
 

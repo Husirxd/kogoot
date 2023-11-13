@@ -5,10 +5,12 @@ import { ResultController } from './result.controller';
 import { Result } from './result.entity';
 import { User } from '../users/users.entity';
 import { UsersModule } from 'src/users/users.module';
+import { Quiz } from 'src/quiz/quiz.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([Result]),
   TypeOrmModule.forFeature([User]),
-  UsersModule
+  TypeOrmModule.forFeature([Quiz]),
+  UsersModule,
   ],
   controllers: [ResultController],
   providers: [ResultService],

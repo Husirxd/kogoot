@@ -15,7 +15,10 @@ export class ResultService {
         private readonly resultRepository: Repository<Result>,
 
         @InjectRepository(User)
-        private readonly userRepository: Repository<User>
+        private readonly userRepository: Repository<User>,
+
+        @InjectRepository(Quiz)
+        private readonly quizRepository: Repository<Quiz>
     ){}
 
     async createResult(result: ValidateQuizDto, quiz: Quiz, score: number): Promise<any> {
@@ -27,6 +30,7 @@ export class ResultService {
         if(participantId === quiz.user.id) return;
         newResult.uid = uid;
         newResult.quiz = quiz;
+        newResult.quizUid = quiz.uid;
         newResult.score = score;
         newResult.answers = answers;
         newResult.participantId = participantId;
@@ -44,20 +48,41 @@ export class ResultService {
 
     async getResult(resultId: string, userId: number): Promise<any> {
         
-        const fullResults = [];
+        const fullResults = {
+            results: [],
+            quiz: {},
+        };
         const result = await this.resultRepository.createQueryBuilder('result')
-        .where('result.uid = :uid', {uid: resultId})
+        .where('result.quizUid = :uid', {uid: resultId})
         .where('result.authorId = :userId', {userId: userId})
         .orderBy('result.participatedAt', 'DESC')
         .limit(30)
         .getMany();
 
+
+        const singleResult = await this.resultRepository.createQueryBuilder('result')
+        .where('result.quizUid = :uid', {uid: resultId})
+        .where('result.authorId = :userId', {userId: userId})
+        .leftJoinAndSelect('result.quiz', 'quiz')
+        .getOne();
+
+        if(!singleResult) return null;
+
+        const quiz = await this.quizRepository.createQueryBuilder('quiz')
+        .where('quiz.id = :quizId', {quizId: singleResult.quiz.id})
+        .leftJoinAndSelect('quiz.questions', 'questions')
+        .leftJoinAndSelect('questions.answers', 'answers')
+        .getOne();
+
+        fullResults.quiz = quiz;
+
+        // fullResults.quiz = quiz;
         //foreach result, get the participantId and if is not null get the user
         for(let i = 0; i < result.length; i++) {
             const participantId = result[i].participantId;
             if(participantId) {
                 const user = await this.userRepository.findOne({where: {id: participantId}});
-                fullResults[i] = {
+                fullResults.results[i] = {
                     ...result[i],
                     participant: {
                         id: user.id,
@@ -66,7 +91,7 @@ export class ResultService {
                     }
                 }
             } else {
-                fullResults[i] = result[i];
+                fullResults.results[i] = result[i];
             }
         }
 

@@ -54,21 +54,26 @@ export default function ResultQuizPage({params}) {
         }, [user]);
 
 
+    const formatDate = (date) => {
+        const newDate = new Date(date);
+        const parsedDate = newDate.toLocaleDateString();
+        const time = newDate.toLocaleTimeString();
+        return `${parsedDate} - ${time}`;
+    }
 
     return (
         <>
         <div className="last-results">
             <h1>Results</h1>
             <div className="results">
-                {results && results.map((result, index)=>{
+                {results && results.results.map((result, index)=>{
                     return(
                         <div className="result">
-
                             <div className="result__score">
                                 <h3>Score: {result.score}</h3>
                             </div>
                             <div className="result__date">
-                                <p>{result.participatedAt}</p>
+                                <p>{formatDate(result.participatedAt)}</p>
                             </div>
                         </div>
                     )
