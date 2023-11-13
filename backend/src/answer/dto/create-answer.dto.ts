@@ -5,5 +5,5 @@ export class CreateAnswerDto {
     answer: string;
 
     @ApiProperty()
-    isCorrect: boolean;
+    isCorrect: number;
   }

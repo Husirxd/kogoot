@@ -60,7 +60,7 @@ export default function CreateQuiz() {
                     answers: [
                         {
                             answer: '',
-                            isCorrect: false,
+                            isCorrect: 0,
                         },
                     ],
                 },
@@ -96,12 +96,11 @@ export default function CreateQuiz() {
             question.answers.forEach((answer, answerIndex) => {
 
                 formData.append(`questions[${index}][answers][${answerIndex}][answer]`, answer.answer);
-                formData.append(`questions[${index}][answers][${answerIndex}][isCorrect]`, answer.isCorrect);
+                formData.append(`questions[${index}][answers][${answerIndex}][isCorrect]`, answer.isCorrect ? 1 : 0);
             });
         });
 
         // Create a new FormData object and append the quizData to it
-
         const accessToken = localStorage.getItem('token');
         // Send the JSON data to the '/quizzes' endpoint using fetch
         try {
@@ -118,7 +117,7 @@ export default function CreateQuiz() {
             // Handle the response, get quizId and redirect to /quiz/[quizId]
             if (response.ok) {
                 const data = await response.json();
-                router.push(`/quiz/${data.id}`);
+                router.push(`/quiz/${data.uid}`);
             }else{
                 // Handle errors
             }
@@ -223,7 +222,7 @@ export default function CreateQuiz() {
                                         checked={answer.isCorrect}
                                         onChange={(e) => {
                                             const updatedQuestions = [...quizData.questions];
-                                            updatedQuestions[questionIndex].answers[answerIndex].isCorrect = e.target.checked;
+                                            updatedQuestions[questionIndex].answers[answerIndex].isCorrect = e.target.checked ? 1 : 0;
                                             setQuizData({ ...quizData, questions: updatedQuestions });
                                         }}
                                     /> Is correct

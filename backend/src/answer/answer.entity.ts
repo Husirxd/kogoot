@@ -9,8 +9,8 @@ export class Answer {
   @Column()
   answer: string;
 
-  @Column({default: false})
-  isCorrect: boolean;
+  @Column()
+  isCorrect: number;
 
   @ManyToOne(() => Question, (question) => question.answers, { onDelete: 'CASCADE' })
   question: Question;

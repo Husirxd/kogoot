@@ -62,12 +62,10 @@ export class QuizService {
       }),
     );
     
-
-
     
     await this.questionRepository.save(questions);
 
-
+    console.log(createQuizDto.questions[0].answers);
     
     const answers = questions.map(question =>
       question.answers.map(answer =>
@@ -78,6 +76,7 @@ export class QuizService {
       ),
     );
 
+    console.log(answers);
     await this.answerRepository.save(answers.flat());
     return quiz;
   }

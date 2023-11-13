@@ -23,6 +23,7 @@ export class ImageController {
       if(id === 0 || id === null) return;
       const question = await this.questionService.getQuestion(id);
       res.set('Content-Type', 'image/png');
+      if(!question.image) return;
       const file = fs.createReadStream(path.join(question.image));
       return new StreamableFile(file);
   }

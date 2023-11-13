@@ -9,5 +9,5 @@ export class UpdateAnswerDto {
     answer: string;
 
     @ApiProperty()
-    isCorrect: boolean;
+    isCorrect: number;
 }

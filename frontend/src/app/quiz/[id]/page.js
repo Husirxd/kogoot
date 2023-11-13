@@ -23,6 +23,8 @@ export default function Page({ params }) {
     ]);
   };
 
+
+
   const handleSubmit = () => {
     // Create a JSON object with user's answers
     const userAnswersJSON = {
@@ -64,7 +66,7 @@ export default function Page({ params }) {
         {quizData.questions.map((question) => (
           <div key={question.id} className="question">
             <p>{question.question}</p>
-            <Image src={`http://localhost:8080/image/question/${question.id}`} width={500} height={500} />
+            <Image alt={question.question} onError = {e => e.target.style.display = 'none'} src={`http://localhost:8080/image/question/${question.id}`} width={500} height={500} />
             <div className="answers">
             {question.answers.map((answer) => (
               <div key={answer.id} className="answer">
@@ -84,7 +86,7 @@ export default function Page({ params }) {
           </div>
         ))}
       </div>
-      <button onClick={handleSubmit}>Submit</button>
+      <div className="flex flex--center"><button className="cta-button" onClick={handleSubmit}>Submit</button></div>
       </>
       )}
       </div>

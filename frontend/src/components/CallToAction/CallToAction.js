@@ -7,7 +7,7 @@ const CallToAction = () => {
             <div className="container">
                 <h2>Educate and have fun!</h2>
                 <p>With Kogoot you can create your own quizzes and share them with your team!</p>
-                <div className="flex flex--center"><Link href="/account/create"><button>Create Account!</button></Link></div>
+                <div className="flex flex--center"><Link href="/account/create"><button className="cta-button" >Create Account!</button></Link></div>
             </div>
         </div>
     )

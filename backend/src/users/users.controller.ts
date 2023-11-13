@@ -4,7 +4,7 @@ import { Post, Body, Param, Get, ParseFilePipeBuilder, UploadedFile  } from '@ne
 import { CreateUserDto } from './dto/create-user.dto';
 import { ApiResponse } from '@nestjs/swagger';
 import { UseInterceptors } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { AnyFilesInterceptor } from '@nestjs/platform-express';
 import { v4 as uuidv4 } from 'uuid';
 import { Express } from 'express';
 import * as path from 'path';
@@ -18,19 +18,22 @@ constructor(private readonly usersService: UsersService) {}
   
     @ApiResponse({ status: 200, description: 'Returns new user object'})
     @Post("create")
-    @UseInterceptors(FileInterceptor('file'))
+    @UseInterceptors(AnyFilesInterceptor())
     async createUser(@Body() body: CreateUserDto,  @UploadedFile() file: Express.Multer.File){
         
-        const filename = `${uuidv4()}${path.extname(file.originalname)}`;
-        const filePath = path.join(__dirname, '..','..', 'uploads', filename);
-        if (!fs.existsSync(path.join(__dirname, '..', '..', 'uploads'))) {
-          fs.mkdirSync(path.join(__dirname, '..','..', 'uploads'));
-        }
-        try {
-          fs.writeFileSync(filePath, file.buffer);
-
-        } catch (error) {
-            console.log(error);
+        let filePath = null;
+        if(file){
+          const filename = `${uuidv4()}${path.extname(file.originalname)}`;
+          filePath = path.join(__dirname, '..','..', 'uploads', filename);
+          if (!fs.existsSync(path.join(__dirname, '..', '..', 'uploads'))) {
+            fs.mkdirSync(path.join(__dirname, '..','..', 'uploads'));
+          }
+          try {
+            fs.writeFileSync(filePath, file.buffer);
+  
+          } catch (error) {
+              console.log(error);
+          }
         }
 
         let uid = uuidv4();
