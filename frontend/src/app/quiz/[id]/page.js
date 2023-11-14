@@ -26,14 +26,12 @@ export default function Page({ params }) {
 
 
   const handleSubmit = () => {
-    // Create a JSON object with user's answers
+
     const userAnswersJSON = {
       quizId: quizData.id,
       questions: userAnswers,
       participantId: localStorage.getItem('userId') ? localStorage.getItem('userId') : null,
     };
-    // Send the JSON object to the server for scoring (you'll need to implement this part on the server)
-    // Example AJAX request
     fetch('http://localhost:8080/quizzes/validate', {
       method: 'POST',
       headers: {

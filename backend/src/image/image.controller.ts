@@ -42,7 +42,7 @@ export class ImageController {
       if(id === 0 || id === null) return;
       const quiz = await this.quizService.getQuiz(id);
       res.set('Content-Type', 'image/png');
-      if(!quiz.image) return;
+      if(!quiz.image) return "";
       const file = fs.createReadStream(path.join(quiz.image));
       return new StreamableFile(file);
   }

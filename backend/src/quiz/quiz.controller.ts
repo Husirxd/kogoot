@@ -60,6 +60,7 @@ export class QuizController {
   @Get('uid/:uid')
   async getQuizByUid(@Param('uid') uid: string) {
     const quiz = await this.quizService.getQuizByUid(uid);
+    console.log(quiz);
     return quiz;
   }
 

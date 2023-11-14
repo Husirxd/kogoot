@@ -1,0 +1,69 @@
+.last-results{
+    .results{
+        .result{
+            background-color: white;
+            border: 3px solid #222;
+            box-shadow: 6px 3px 0px #222;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            &__date{
+                font-weight: bold;
+                font-family: 12px;
+                margin-bottom: 8px;
+            }
+            h3{
+                margin-bottom: 24px;
+            }
+        }
+        .question-list{
+            max-height: 200px;
+            overflow-y: auto;
+            .question{
+                margin-bottom: 1rem;
+                .incorrect{
+                    color:#9c0707;
+                }
+                .correct{
+                    color: #0a9c07;
+                }
+            }
+        }
+    }
+    .quiz-info{
+        margin-top: 1rem;
+    }
+    .result-info{
+        margin-top: 2rem;
+    }
+    .hist{
+        max-width: 420px;
+        width: 100%;
+        border: 1px solid #222;
+        height: 300px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        margin-bottom: 4rem;
+
+
+        &__bar{
+            width: 100%;
+            background-color: #222;
+            position: relative;
+            border: 1px solid #eee;
+            border-bottom: none;
+            border-top: none;
+
+            p{
+                position: absolute;
+                top:8px;
+                left: 50%;
+                transform: translateX(-50%);
+                font-weight: bold;
+                opacity: 1;
+                filter:hue-rotate(180deg);
+          
+            }
+        }
+    }
+}
