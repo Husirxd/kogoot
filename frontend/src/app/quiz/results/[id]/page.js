@@ -106,8 +106,8 @@ export default function ResultQuizPage({params}) {
             <div className='hist'>
                 {histogram.map((score, index)=>{
                     return(
-                        <div key={index} className='hist__bar' style={{height: `${score*100/results.results.length}%`, backgroundColor: `hsl(${score*23%256},100%,50%)`}}>
-                            <p>{index}</p>
+                        <div key={index} className='hist__bar' style={{height: `${score*100/results.results.length}%`, backgroundColor: `hsl(${(score*100/maxScore)%256},100%,50%)`}}>
+                            <p>{index}pkt.</p>
                         </div>
                     )
                 })}

@@ -29,7 +29,7 @@ export class Quiz {
   @OneToMany(() => Question, (question) => question.quiz,  {onDelete: 'CASCADE' })
   questions: Question[];
 
-  @ManyToOne(() => User, (user) => user.quizzes, {onDelete: 'CASCADE' })
+  @ManyToOne(() => User, (user) => user.quizzes)
   user: User;
 
   @ManyToMany(() => Category,  {onDelete: 'CASCADE' })
