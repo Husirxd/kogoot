@@ -1,0 +1,26 @@
+.page-score{
+    .answers{
+        margin-bottom: 1rem;
+       
+    }
+    .question-list{
+      
+        margin-top: 2rem;
+        .question{
+            margin-top: 2rem;
+            background-color: white;
+            padding: 20px;
+            h4{
+                margin-bottom: 1em;
+            }
+            margin-bottom: 1rem;
+            .incorrect{
+                color:#9c0707;
+                font-weight: bold;
+            }
+            .correct{
+                color: #0a9c07;
+            }
+        }
+    }
+}

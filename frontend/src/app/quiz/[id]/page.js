@@ -41,8 +41,9 @@ export default function Page({ params }) {
     })
       .then((response) => response.json())
       .then((data) => {
+		console.log(data);
         //reroute to /quiz/score page with score as a parameter
-        router.push(`/quiz/score/?s=${data.score}`);
+        router.push(`/quiz/score/${data.uid}`);
       })
       .catch((error) => {
         console.error('Error scoring quiz:', error);
@@ -51,31 +52,49 @@ export default function Page({ params }) {
 
 
 
-  return(
+	return(
     <div className="page page-resolve container">
-      {quizData === null && <p>Loading...</p>}
-
-      {quizData !== null && (
+    {quizData === null && <p>Loading...</p>}
+    {quizData !== null && (
         <>
-      <h1>{quizData.title}</h1>
-      <p>{quizData.description}</p>
-
-      <div>
+        <div className="quiz-banner">
+        <div className="quiz-title">
+			<h1>{quizData.title}</h1>
+			<p>{quizData.description}</p>
+        </div>
+        <div>
+			<Image src={`http://localhost:8080/image/quiz/${quizData.id}`} 
+			width={1440} 
+			height={0}
+			sizes="100vw"
+			style={{ width: '100%', height: '100%' }} // optional
+			/>
+        </div>
+    </div>
+    <div>
         {quizData.questions.map((question) => (
           <div key={question.id} className="question">
-            <p>{question.question}</p>
-            <Image alt={question.question} onError = {e => e.target.style.display = 'none'} src={`http://localhost:8080/image/question/${question.id}`} width={500} height={500} />
+            <h2>{question.question}</h2>
+            <div className="image-container"><Image 
+			alt={question.question} 
+			onError = {e => e.target.style.display = 'none'} 
+			src={`http://localhost:8080/image/question/${question.id}`}  
+			width={0}
+			height={0}
+			sizes="100vw"
+			style={{ width: '100%', height: '100%' }} // optional
+			/></div>
             <div className="answers">
             {question.answers.map((answer) => (
               <div key={answer.id} className="answer">
                 <label>
                 <input
-                  type="radio"
-                  name={`question-${question.id}`}
-                  value={answer.id}
-                  onChange={() =>
+            		type="radio"
+                	name={`question-${question.id}`}
+                	value={answer.id}
+            		onChange={() =>
                     handleAnswerSelection(question.id, answer.id)
-                  }
+                }
                 />
                 {answer.answer}</label>
               </div>

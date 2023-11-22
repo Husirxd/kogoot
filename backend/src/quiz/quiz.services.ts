@@ -175,8 +175,9 @@ export class QuizService {
   }
 
   async searchQuizzes(search: string): Promise<Quiz[]> {
+    console.log(search);
     return this.quizRepository.createQueryBuilder('quiz')
-    .where('quiz.title LIKE :search', { search: `%${search}%` })
+    .where('LOWER(quiz.title) LIKE LOWER(:search)', { search: `%${search}%` })
     .leftJoinAndSelect('quiz.categories', 'categories')
     .orderBy('quiz.createdAt', 'DESC')
     .getMany();
@@ -228,8 +229,7 @@ export class QuizService {
     }); 
 
     const result = await this.resultService.createResult(body, quiz, score);
-    results.score = score;
-    return results;
+    return result;
   }
 
   async deleteQuiz(uid: string): Promise<Quiz> {

@@ -44,10 +44,8 @@ export default function ResultQuizPage({params}) {
             
             .then((res)=>res.json())
             .then((data)=>{
-                console.log(data);
                 setResults(data);
                 setQuiz(data.quiz);
-
             })
             .catch((err)=>{
                 console.log(err);
@@ -76,6 +74,7 @@ export default function ResultQuizPage({params}) {
             const answer = answersArray.find((answer)=>{
                 return answer.questionId == question.id;
             })
+            if(!answer) return;
             const chosenAnswerId = answer.chosenAnswerId;
             const chosenAnswer = question.answers.find((answer)=>{
                 return answer.id == chosenAnswerId;

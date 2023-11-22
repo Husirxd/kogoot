@@ -33,6 +33,7 @@ export class ImageController {
       if(id === 0 || id === null ||  id === undefined) return;
       const user = await this.usersService.getUser(id);
       res.set('Content-Type', 'image/png');
+      if(!user.avatar) return;
       const file = fs.createReadStream(path.join(user.avatar));
       return new StreamableFile(file);
   }

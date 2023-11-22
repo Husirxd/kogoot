@@ -1,4 +1,4 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Controller, Get, Query, Param } from '@nestjs/common';
 import { ResultService } from './result.service';
 
 @Controller('result')
@@ -10,9 +10,17 @@ export class ResultController {
         
     }
 
+    @Get(':uid')
+        async getResults(@Param('uid') uid: string): Promise<any> {
+        return this.resultService.getResult(uid);
+    }
+
     @Get()
         async getResult(@Query('userId') userId: number, @Query('result') result: string): Promise<any> {
-
-        return this.resultService.getResult(result, userId);
+        console.log(result);    
+        return this.resultService.getResults(result, userId);
     }
+
+
 }
+

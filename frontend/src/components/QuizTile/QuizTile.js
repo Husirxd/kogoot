@@ -15,7 +15,7 @@ const QuizTile = ({ quiz }) => {
     return (
         <div className={`quiz-tile quiz--${category?.category}`}>
             <div className="quiz-category pile">{category && category?.categoryName || "Quiz"}</div>
-            <div className='quiz-image'><Link href={`/quiz/${quiz.uid}`}><Image width={405} height={200} src={`http://localhost:8080/image/quiz/${quiz.id}`}/></Link></div>
+            <div className='quiz-image'><Link href={`/quiz/${quiz.uid}`}><Image width={405} height={200} onError={(e)=>{e.target.style="display:none;"}} src={`http://localhost:8080/image/quiz/${quiz.id}`}/></Link></div>
             <h2><Link href={`/quiz/${quiz.uid}`}>{quiz.title}</Link></h2>
             <p>{quiz.description}</p>
             <Link href={`/quiz/${quiz.uid}`}><button className='cta-button'>Start</button></Link>

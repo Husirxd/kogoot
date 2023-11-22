@@ -46,7 +46,7 @@ export class ResultService {
         return false;
     }
 
-    async getResult(resultId: string, userId: number): Promise<any> {
+    async getResults(resultId: string, userId: number): Promise<any> {
         
         const fullResults = {
             results: [],
@@ -54,15 +54,16 @@ export class ResultService {
         };
         const result = await this.resultRepository.createQueryBuilder('result')
         .where('result.quizUid = :uid', {uid: resultId})
-        .where('result.authorId = :userId', {userId: userId})
+        .andWhere('result.authorId = :userId', {userId: userId})
         .orderBy('result.participatedAt', 'DESC')
         .limit(30)
         .getMany();
 
 
+
         const singleResult = await this.resultRepository.createQueryBuilder('result')
         .where('result.quizUid = :uid', {uid: resultId})
-        .where('result.authorId = :userId', {userId: userId})
+        .andWhere('result.authorId = :userId', {userId: userId})
         .leftJoinAndSelect('result.quiz', 'quiz')
         .getOne();
 
@@ -94,8 +95,29 @@ export class ResultService {
                 fullResults.results[i] = result[i];
             }
         }
-
         return fullResults;
+    }
+    
+    async getResult(uid: string): Promise<any> {
+        const fullResult = {
+            result: {},
+            quiz: {}    
+        }
+        const result = await this.resultRepository.createQueryBuilder('result')
+        .where('result.uid = :uid', {uid: uid})
+        .leftJoinAndSelect('result.quiz', 'quiz')
+        .getOne();
+
+        const quiz = await this.quizRepository.createQueryBuilder('quiz')
+        .where('quiz.id = :quizId', {quizId: result.quiz.id})
+        .leftJoinAndSelect('quiz.questions', 'questions')
+        .leftJoinAndSelect('questions.answers', 'answers')
+        .getOne();
+
+        fullResult.result = result;
+        fullResult.quiz = quiz;
+
+        return fullResult;
     }
 
 }

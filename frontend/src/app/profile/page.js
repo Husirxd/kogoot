@@ -94,11 +94,11 @@ export default function ProfilePage(){
     }
 
     return (
-        <>
+        <div className="page">
         <div className="container profile">
             <div className="profile__header">
                 <div className="profile-image">
-                    { user && <Image priority={1} alt={user?.nickname} width={200} height={200} src={`http://localhost:8080/image/user/${user && user?.id}`} />}
+                    { user && <Image priority={1} alt={user?.nickname} onError={(e)=>{e.target.style = "display:none;"}} width={200} height={200} src={`http://localhost:8080/image/user/${user && user?.id}`} />}
                 </div>
                 {loading && <div>Loading...</div>}  
                     <h2>{user?.nickname}</h2>
@@ -110,7 +110,7 @@ export default function ProfilePage(){
                 return (
                     <div className="quiz-tile" key={quiz.id}>
                         <div className='quiz-tile__info'>
-                        <div className='quiz-image'><Image width={80} height={80} src={`http://localhost:8080/image/quiz/${quiz.id}`}/></div>
+                        <div className='quiz-image'><Image width={80} height={80} onError={(e)=>{e.target.style = "display:none;"}} src={`http://localhost:8080/image/quiz/${ quiz && quiz.id}`}/></div>
                         <h2>{quiz.title}</h2>
                         </div>
                         <div class="quiz-tile__options">
@@ -124,6 +124,6 @@ export default function ProfilePage(){
             })}
         </div>
        
-        </>
+        </div>
     )
 }

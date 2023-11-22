@@ -28,7 +28,7 @@ const Page = () =>{
         }
         if( searchQuery.length < 4) return;
 
-        fetch(`http://localhost:3000/quizzes/search/?search=${searchQuery}`)
+        fetch(`http://localhost:8080/quizzes/search/?search=${searchQuery}`)
         .then(response => response.json())
         .then(data => {
             setQuizzes(data);
@@ -47,7 +47,7 @@ const Page = () =>{
             return;
         }
 
-        fetch(`http://localhost:3000/quizzes/category/${categoryId}`)
+        fetch(`http://localhost:8080/quizzes/category/${categoryId}`)
         .then(response => response.json())
         .then(data => {
 
@@ -61,7 +61,7 @@ const Page = () =>{
     }
     
     const getQuizzes = async (limit,offset)  => {
-        const data = await fetch(`http://localhost:3000/quizzes?limit=${limit}&offset=${offset}`);
+        const data = await fetch(`http://localhost:8080/quizzes?limit=${limit}&offset=${offset}`);
         const posts = await data.json();
         return posts;
       };

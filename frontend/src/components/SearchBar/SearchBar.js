@@ -7,7 +7,7 @@ const SearchBar = ({handleChangeCategory, handleSearch}) => {
     
     useEffect(() => {
         const getCategories = async ()  => {
-            const res = await fetch(`http://localhost:3000/category/`);
+            const res = await fetch(`http://localhost:8080/category/`);
             const data = await res.json();
             return data;
           };
