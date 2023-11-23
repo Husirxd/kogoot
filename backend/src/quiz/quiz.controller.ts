@@ -1,4 +1,3 @@
-// quiz.controller.ts
 import { Controller, Post, Body, Get, Param, Query, Put, Delete, Res,  StreamableFile } from '@nestjs/common';
 import { QuizService } from './quiz.services';
 import { CreateQuizDto } from './dto/create-quiz.dto';
@@ -11,11 +10,6 @@ import { UseInterceptors } from '@nestjs/common';
 import { AnyFilesInterceptor } from '@nestjs/platform-express';
 import { ResultService } from 'src/result/result.service';
 
-
-import { v4 as uuidv4 } from 'uuid';
-import * as path from 'path';
-import * as fs from 'fs';
-import { json } from 'stream/consumers';
 @Controller('quizzes')
 export class QuizController {
   constructor(

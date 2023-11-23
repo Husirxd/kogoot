@@ -15,4 +15,10 @@ export class CategoryController {
     async getCategories() {
         return await this.categoryService.getCategories();
     }
+
+    @Post()
+    async createCategory(@Body() createCategoryDto: CreateCategoryDto) {
+        return await this.categoryService.createCategory(createCategoryDto);
+    }
+    
 }

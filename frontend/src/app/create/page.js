@@ -5,6 +5,7 @@ import "./create.scss"
 export default function CreateQuiz() {
     const router = useRouter()
     const [user, setUser] = useState();
+    const [categories, setCategories] = useState([]);
     useEffect(() => {
 
         const accessToken = localStorage.getItem('token');
@@ -13,9 +14,17 @@ export default function CreateQuiz() {
         }
         setUser(localStorage.getItem('userId'));  
 
+        fetch(`http://localhost:8080/category`)
+        .then((res)=>res.json())
+        .then((data)=>{
+            setCategories(data);
+        })
+
+
         if(!user){
             return;
         }
+
 
     }, []);
 
@@ -24,7 +33,6 @@ export default function CreateQuiz() {
             return;
         }
         quizData.userId = user?.id;
-        console.log(user?.id);
     }, [user]);
 
 
@@ -163,7 +171,10 @@ export default function CreateQuiz() {
                         onChange={(e) => setQuizData({ ...quizData, categoriesIds: Array.from(e.target.selectedOptions, (option) => option.value) })}
                     >
                         {/* Populate categories from a prefetch list */}
-                        <option value="1">Cuisine</option>
+                        {categories && categories.map((category) => (
+                            <option key={category.id} value={category.id}>{category.categoryName}</option>
+                        )
+                        )}
                         {/* Add more category options here */}
                     </select>
                 </label>
