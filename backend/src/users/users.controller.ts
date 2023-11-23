@@ -9,8 +9,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { Express } from 'express';
 import * as path from 'path';
 import * as fs from 'fs';
-import { create } from 'domain';
-import { Stream } from 'stream';
 @Controller('users')
 export class UsersController {
 constructor(private readonly usersService: UsersService) {}

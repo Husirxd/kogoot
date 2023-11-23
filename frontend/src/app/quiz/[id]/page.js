@@ -63,7 +63,8 @@ export default function Page({ params }) {
 			<p>{quizData.description}</p>
         </div>
         <div>
-			<Image src={`http://localhost:8080/image/quiz/${quizData.id}`} 
+			<Image src={`http://localhost:8080/image/quiz/${quizData.id}`}
+      onError = {e => e.target.style.display = 'none'}  
 			width={1440} 
 			height={0}
 			sizes="100vw"
