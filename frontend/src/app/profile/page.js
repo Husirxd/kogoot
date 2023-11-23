@@ -104,14 +104,14 @@ export default function ProfilePage(){
                     <h2>{user?.nickname}</h2>
                 </div>
             </div>
-        <div className="container quizzes-list">
-           <div className="flex flex--center"><button className="cta-button"><Link href={`/create`}>Create New!</Link></button></div>
+            <div className="flex flex--center"><button className="cta-button"><Link href={`/create`}>Create New!</Link></button></div>
+        <div className="container quizzes-list--profile">
             {quizzes && quizzes.map((quiz)=>{
                 return (
                     <div className="quiz-tile" key={quiz.id}>
                         <div className='quiz-tile__info'>
-                        <div className='quiz-image'><Image width={80} height={80} onError={(e)=>{e.target.style = "display:none;"}} src={`http://localhost:8080/image/quiz/${ quiz && quiz.id}`}/></div>
-                        <h2>{quiz.title}</h2>
+                            <div className='quiz-image'><Image width={400} height={200} onError={(e)=>{e.target.style = "display:none;"}} src={`http://localhost:8080/image/quiz/${ quiz && quiz.id}`}/></div>
+                            <h2>{quiz.title}</h2>
                         </div>
                         <div class="quiz-tile__options">
                         <Link className="option" href={`/quiz/${quiz.uid}`}>Solve</Link>

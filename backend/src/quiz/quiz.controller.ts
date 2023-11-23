@@ -46,7 +46,6 @@ export class QuizController {
   @UseGuards(AuthGuard)
   @Delete(':uid')
   async deleteQuiz(@Param('uid') uid: string) {
-
     const quiz = await this.quizService.deleteQuiz(uid);
     return quiz;
   }

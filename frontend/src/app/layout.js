@@ -1,5 +1,5 @@
 import './globals.scss'
-import { Inter } from 'next/font/google'
+import { Inter, Cutive_Mono } from 'next/font/google'
 import Footer from '../components/Footer/Footer'
 import Header from '../components/Header/Header'
 const inter = Inter({ subsets: ['latin'] })

@@ -17,7 +17,6 @@ export class ResultController {
 
     @Get()
         async getResult(@Query('userId') userId: number, @Query('result') result: string): Promise<any> {
-        console.log(result);    
         return this.resultService.getResults(result, userId);
     }
 

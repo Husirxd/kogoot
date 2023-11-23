@@ -1,7 +1,12 @@
 @import "./mixin.scss";
+.home-quizzes{
+    h2{
+        margin-bottom: 2.5rem;
+    }
+}
 .why-us{
     margin-top: 100px;
-   
+    margin-bottom: 100px;
     h2{
         span{
             filter: drop-shadow(2px 2px 0px #ffcc00);

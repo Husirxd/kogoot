@@ -9,7 +9,7 @@
     border-radius: 1rem;
     background-color: #fff;
     box-shadow: 4px 4px 0px rgb(0, 0, 0);
-    gap:1rem;
+    gap:0.5rem;
     border: 4px solid #000;
     transition: all 0.2s ease-in-out;
     cursor: pointer;
@@ -23,15 +23,18 @@
         right: 2rem;
     }
 
-    .quiz-tile__title{
-        font-size: 1.5rem;
+
+    .quiz-title{
+        font-size: 1.25rem;
         font-weight: 600;
         color: #000;
+        text-align: center;
     }
-    .quiz-tile__description{
+    .quiz-desc{
         font-size: 1rem;
         font-weight: 400;
         color: #000;
+        margin-bottom: 2rem;
     }
     .quiz-tile__footer{
         display: flex;

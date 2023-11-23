@@ -9,7 +9,8 @@ export default async function Home() {
   return (
     <main className={styles.main}>
       <Hero/>
-      <section className='container quizzes quizzes'>
+      <section className='container quizzes home-quizzes'>
+        <h2 className='flex flex--center'>Fresh new!</h2>
         <div className='quizzes__grid'>  
         {posts.map((post) => (
           <QuizTile key={post?.id} quiz={post} />
