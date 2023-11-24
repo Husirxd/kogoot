@@ -1,9 +1,10 @@
 "use client"
 import { useRouter } from 'next/navigation';
-
 import { useEffect, useState } from 'react';
 const CheckAuthStatus = ({redirect = false}) => {
   
+
+    const router = useRouter();
     const [valid, setValid] = useState(false);
     useEffect(() => {
         if(document.cookie.includes('valid=true')){
@@ -11,15 +12,16 @@ const CheckAuthStatus = ({redirect = false}) => {
             setValid(true);
         }
         document.cookie = "valid=true;max-age=120";
+
+        const accessToken = localStorage.getItem('token');
+        if(!accessToken && redirect) {
+            router.push('/account');
+        }
+    
     },[])
 
     
-    const router = useRouter();
-    const accessToken = localStorage.getItem('token');
-    if(!accessToken && redirect) {
-
-        router.push('/account');
-    }
+  
 
     if(!valid) return null;
 

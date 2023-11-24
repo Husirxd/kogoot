@@ -221,7 +221,7 @@ export class QuizService {
         }
       });
     }); 
-
+    console.log(score);
     const result = await this.resultService.createResult(body, quiz, score);
     return result;
   }

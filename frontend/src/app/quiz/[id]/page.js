@@ -17,10 +17,24 @@ export default function Page({ params }) {
   }, []);
 
   const handleAnswerSelection = (questionId, chosenAnswerId) => {
-    setUserAnswers((prevAnswers) => [
-      ...prevAnswers,
-      { questionId, chosenAnswerId },
-    ]);
+    const existingAnswer = userAnswers.find(
+      (answer) => answer.questionId === questionId
+    );
+
+    if (existingAnswer) {
+      const updatedAnswers = userAnswers.map((answer) => {
+        if (answer.questionId === questionId) {
+          return { ...answer, chosenAnswerId };
+        }
+        return answer;
+      });
+      setUserAnswers(updatedAnswers);
+    } else {
+      setUserAnswers([
+        ...userAnswers,
+        { questionId, chosenAnswerId },
+      ]);
+    }
   };
 
 
