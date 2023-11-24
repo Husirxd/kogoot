@@ -6,18 +6,15 @@ const CheckAuthStatus = ({redirect = false}) => {
 
     const router = useRouter();
     const [valid, setValid] = useState(false);
+    const [accessToken,setAccessToken] = useState(null);
     useEffect(() => {
         if(document.cookie.includes('valid=true')){
             //return null;
             setValid(true);
         }
         document.cookie = "valid=true;max-age=120";
-
-        const accessToken = localStorage.getItem('token');
-        if(!accessToken && redirect) {
-            router.push('/account');
-        }
-    
+        setAccessToken(localStorage.getItem('token'));
+        
     },[])
 
     
