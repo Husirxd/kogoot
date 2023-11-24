@@ -27,14 +27,6 @@ services:
       - ./backend/uploads:/app/uploads/
       - ./backend/src:/app/src # Path to your app source code
 
-  
-  frontend: 
-    build:
-      context: ./frontend # Path to your Next.js app
-      dockerfile: Dockerfile
-    container_name: frontend
-    ports:
-      - '3000:3000'
 
 
   pgadmin:

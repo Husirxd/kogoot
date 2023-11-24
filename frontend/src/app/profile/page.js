@@ -71,7 +71,7 @@ export default function ProfilePage(){
         <div className="container profile">
             <div className="profile__header">
                 <div className="profile-image">
-                    { user && <Image priority={1} alt={user?.nickname} onError={(e)=>{e.target.style = "display:none;"}} width={200} height={200} src={`http://localhost:8080/image/user/${user && user?.id}`} />}
+                    { user && <Image priority={1} alt={user?.nickname} onError={(e)=>{e.target.style = "display:none;"}} width={200} height={200} src={`http://localhost:8080/image/user/${user?.id}`} />}
                 </div>
                 {loading && <div>Loading...</div>}  
                     <h2>{user?.nickname}</h2>

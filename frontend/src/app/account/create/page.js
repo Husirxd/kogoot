@@ -27,7 +27,6 @@ const LoginPage = () => {
             formData.append('email', email);
             formData.append('password', password);
             formData.append('nickname', nickname);
-
             const response = await fetch('http://localhost:8080/users/create', {
                 method: 'POST',
                 body: formData,

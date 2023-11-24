@@ -23,7 +23,6 @@ export class QuizController {
   @Post()
   @UseInterceptors(AnyFilesInterceptor())
   async createQuiz(@Body() createQuizDto: CreateQuizDto, @UploadedFiles() files: Array<Express.Multer.File>) {
-
     let images = await this.quizService.uploadImages(files);
     const quiz = await this.quizService.createQuiz(createQuizDto, images);
     return quiz;
@@ -32,7 +31,6 @@ export class QuizController {
   @UseGuards(AuthGuard)
   @Put()
   async updateQuiz(@Body() updateQuizDto: UpdateQuizDto) {
-
     const quiz = await this.quizService.updateQuiz(updateQuizDto);
     return quiz;
   }

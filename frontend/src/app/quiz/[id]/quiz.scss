@@ -5,6 +5,9 @@
         box-shadow: 4px 4px 0px #000000;    
         background-image: url("/assets/images/category/quiz.jpg");
         min-height: 200px;
+        img{
+            max-height: 400px;
+        }
         position: relative;
         .quiz-title{
             position:absolute;

@@ -30,17 +30,20 @@ export class ImageController {
 
   @Get("user/:id")
   async getUserAvatar(@Param('id') id: number | null | undefined,  @Res({passthrough:true}) res: any) { 
-      if(id === 0 || id === null ||  id === undefined) return;
+   
+    if(id === 0 || id === null) return;
       const user = await this.usersService.getUser(id);
+      console.log(user);
       res.set('Content-Type', 'image/png');
       if(!user.avatar) return;
+
       const file = fs.createReadStream(path.join(user.avatar));
       return new StreamableFile(file);
   }
   
   @Get("quiz/:id")
-  async getQuizAvatar(@Param('id') id: number | null,  @Res({passthrough:true}) res: any) { 
-      if(id === 0 || id === null) return;
+  async getQuizAvatar(@Param('id') id: number | null,  @Res({passthrough:true}) res: any) {   
+    if(id === 0 || id === null) return;
       const quiz = await this.quizService.getQuiz(id);
       res.set('Content-Type', 'image/png');
       if(!quiz.image) return "";

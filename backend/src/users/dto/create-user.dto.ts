@@ -10,7 +10,5 @@ export class CreateUserDto {
     nickname?: string;
     @ApiProperty()
     uid: string;
-    @ApiProperty()
-    file?: any;
     
 }
