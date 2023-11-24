@@ -4,10 +4,15 @@ import styles from './page.scss'
 import Hero from '../components/Hero/Hero'
 import QuizTile from '@/components/QuizTile/QuizTile';
 import CallToAction from '@/components/CallToAction/CallToAction';
+import CheckAuthStatus  from '@/service/auth';
 export default async function Home() {
   const posts = await getPosts();
+
+
+
   return (
     <main className={styles.main}>
+      <CheckAuthStatus />
       <Hero/>
       <section className='container quizzes home-quizzes'>
         <h2 className='flex flex--center'>Fresh new!</h2>

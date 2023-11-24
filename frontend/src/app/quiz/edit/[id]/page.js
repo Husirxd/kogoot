@@ -1,6 +1,7 @@
 "use client"
 import {useState, useEffect} from 'react';
 import { useRouter } from 'next/router'
+import CheckAuthStatus from '@/service/auth';
 import "./edit.scss"
 
 export default function EditQuizPage({params}) {
@@ -23,8 +24,6 @@ export default function EditQuizPage({params}) {
             fetch(`http://localhost:8080/quizzes/uid/${params.id}`)
             .then((res)=>res.json())
             .then((data)=>{
-                console.log(data);
-
                 setQuizData(data);
             })
             .catch((err)=>{
@@ -61,14 +60,17 @@ export default function EditQuizPage({params}) {
 
     return (
         <div className="container page">
+            <CheckAuthStatus redirect={true}/>
             <div className='page-edit'>
                 <form>
-                    <label>Title:
-                        <input type="text" value={quizData?.title} onChange={(e)=>setQuizData({...quizData, title: e.target.value})}/>
-                    </label>
-                    <label>Description:
-                        <input type="text" value={quizData?.description} onChange={(e)=>setQuizData({...quizData, description: e.target.value})}/>
-                    </label>
+                    <div className="quiz-banner">
+                        <label>Title:
+                            <input type="text" value={quizData?.title} onChange={(e)=>setQuizData({...quizData, title: e.target.value})}/>
+                        </label>
+                        <label>Description:
+                            <input type="text" value={quizData?.description} onChange={(e)=>setQuizData({...quizData, description: e.target.value})}/>
+                        </label>
+                    </div>
                     {quizData && quizData.questions.map((question, questionIndex)=>{
                     
                         return(
@@ -83,14 +85,14 @@ export default function EditQuizPage({params}) {
                                 {question.answers.map((answer, answerIndex)=>{
                                     return(
                                         <div className="answer" key={answerIndex}>
-                                            <label>Answer:
+                                            <label>
                                                 <input type="text" value={answer.answer} onChange={(e)=>{
                                                     const updatedQuestions = [...quizData.questions];
                                                     updatedQuestions[questionIndex].answers[answerIndex].answer = e.target.value;
                                                     setQuizData({...quizData, questions: updatedQuestions});
                                                 }}/>
                                             </label>
-                                            <label>Correct:
+                                            <label className='checkbox-type'>Correct:
                                                 <input type="checkbox" checked={answer.isCorrect ? "checked" : ""} onChange={(e)=>{
                                                     const updatedQuestions = [...quizData.questions];
                                                     updatedQuestions[questionIndex].answers[answerIndex].isCorrect = e.target.checked;
@@ -105,8 +107,8 @@ export default function EditQuizPage({params}) {
 
 
                     })}
-                    <h3>Hey you. Nice quiz. Create it?</h3>
-                    <button type="button"  className="cta-button" onClick={handleSubmit}>Yea, why not</button>
+                    <h3>Hey you. Nice quiz. Update it?</h3>
+                    <button type="button" className="cta-button" onClick={handleSubmit}>Yea, why not</button>
                 
                 </form>
             </div>

@@ -1,0 +1,35 @@
+.page-edit{
+    margin-bottom: 2rem;
+    .quiz-banner{
+        margin-bottom: 2rem;
+        background-color: white;
+        padding: 2rem;
+
+    }
+    label{
+        display: flex;
+        flex-direction: column;
+        input{
+            max-width: 768px;
+        }
+        
+    }
+    .question{
+        background-color: white;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        border: 3px solid #222;
+        box-shadow: 4px 4px 0px #222;
+    }
+    .answer{
+        display: flex;
+        .checkbox-type{
+            margin-right: 1rem;
+            flex-direction: row-reverse;
+            align-items: center;
+        }
+    }
+    .cta-button{
+        
+    }
+}

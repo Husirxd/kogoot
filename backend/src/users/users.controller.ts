@@ -30,7 +30,6 @@ constructor(private readonly usersService: UsersService) {}
             fs.writeFileSync(filePath, file.buffer);
   
           } catch (error) {
-              console.log(error);
           }
         }
 

@@ -52,7 +52,6 @@ export class QuizService {
       image: images?.thumbnail,
       categories: categories,
       });
-      console.log(images);
     await this.quizRepository.save(quiz);   
     const questions = createQuizDto.questions.map((question,index) =>
       this.questionRepository.create({
@@ -65,8 +64,6 @@ export class QuizService {
     
     await this.questionRepository.save(questions);
 
-    console.log(createQuizDto.questions[0].answers);
-    
     const answers = questions.map(question =>
       question.answers.map(answer =>
         this.answerRepository.create({
@@ -76,7 +73,6 @@ export class QuizService {
       ),
     );
 
-    console.log(answers);
     await this.answerRepository.save(answers.flat());
     return quiz;
   }
@@ -135,7 +131,6 @@ export class QuizService {
       questions: [],
     };
     for (const file of files) {
-      console.log(file);
       //const image = await this.imageService.uploadImage(file);
       if(file.fieldname === "thumbnail"){
         images.thumbnail = await this.fileService.uploadImage(file);
@@ -175,7 +170,6 @@ export class QuizService {
   }
 
   async searchQuizzes(search: string): Promise<Quiz[]> {
-    console.log(search);
     return this.quizRepository.createQueryBuilder('quiz')
     .where('LOWER(quiz.title) LIKE LOWER(:search)', { search: `%${search}%` })
     .leftJoinAndSelect('quiz.categories', 'categories')

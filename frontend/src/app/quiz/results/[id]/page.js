@@ -2,6 +2,7 @@
 import {useState, useEffect} from 'react';
 import { useRouter } from 'next/router'
 import "./results.scss"
+import CheckAuthStatus from '@/service/auth';
 
 export default function ResultQuizPage({params}) {
 
@@ -118,6 +119,7 @@ export default function ResultQuizPage({params}) {
     return (
         <>
         <div className="last-results page container">
+            <CheckAuthStatus redirect={true}/>
             <h1>Results</h1>
             <div className='quiz-info'>
                 <h2>Quiz: {quiz?.title}</h2>

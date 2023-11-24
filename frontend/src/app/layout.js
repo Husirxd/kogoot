@@ -1,3 +1,4 @@
+
 import './globals.scss'
 import { Inter, Cutive_Mono } from 'next/font/google'
 import Footer from '../components/Footer/Footer'
@@ -9,11 +10,16 @@ export const metadata = {
   description: 'Solve quizzes and learn new things!',
 }
 
+
+
 export default function RootLayout({ children }) {
+
   return (
+  
+    
     <html lang="en">
       <body className={inter.className}>
-        <Header/>
+        <Header/>  
         {children}
         <Footer/>
         </body>

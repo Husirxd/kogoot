@@ -16,7 +16,6 @@ export class UsersService {
   ) {}
 
   async findOne(email: string): Promise<User | undefined | any> {
-    console.log(email)
     return this.usersRepository.createQueryBuilder('user')
     .where('user.email = :email', { email })
     .getOne();

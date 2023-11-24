@@ -15,7 +15,6 @@ export class FileService {
             fs.writeFileSync(filePath, file.buffer);
             return filePath;
         } catch (error) {
-            console.log(error);
         }
         return null;
     }

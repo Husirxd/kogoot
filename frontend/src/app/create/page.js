@@ -1,17 +1,13 @@
 "use client"
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import CheckAuthStatus from '@/service/auth';
 import "./create.scss"
 export default function CreateQuiz() {
     const router = useRouter()
     const [user, setUser] = useState();
     const [categories, setCategories] = useState([]);
     useEffect(() => {
-
-        const accessToken = localStorage.getItem('token');
-        if(!accessToken) {
-            router.push('/account');
-        }
         setUser(localStorage.getItem('userId'));  
 
         fetch(`http://localhost:8080/category`)
@@ -20,12 +16,9 @@ export default function CreateQuiz() {
             setCategories(data);
         })
 
-
         if(!user){
             return;
         }
-
-
     }, []);
 
     useEffect(() => {
@@ -136,6 +129,7 @@ export default function CreateQuiz() {
 
     return (
         <div className='container page'>
+            <CheckAuthStatus redirect={true}/>
             <div className='page-create'>
             <h1>Create Quiz</h1>
             <form>
