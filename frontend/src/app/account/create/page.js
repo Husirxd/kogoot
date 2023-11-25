@@ -2,13 +2,14 @@
 "use client"
 import "./create-account.scss";
 import { useState } from 'react';
+import { useRouter } from "next/navigation";
 import Image from 'next/image';
 const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [nickname, setNickname] = useState('');
     const [file, setFile] = useState(null);
-    
+    const router = useRouter();
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -40,6 +41,7 @@ const LoginPage = () => {
                 localStorage.setItem('userId', data.id);
                 localStorage.setItem('token', data.token);
                 //redirect to my-account
+                router.push('/profile');
             } else {
                 // Handle login failure, e.g., display an error message.
             }
@@ -51,7 +53,7 @@ const LoginPage = () => {
 
     return (
         <div className='page container page-create-account create-account'>
-            <h1>Login</h1>
+            <h1>Create Account</h1>
             <form onSubmit={handleSubmit} >
                 <div>
                     <label>Email</label>

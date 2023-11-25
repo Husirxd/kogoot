@@ -14,6 +14,8 @@ export default function Page({ params }) {
     .then((data)=>{
       setQuizData(data)
     })
+
+    window.scrollTo(0, 0);
   }, []);
 
   const handleAnswerSelection = (questionId, chosenAnswerId) => {
@@ -105,8 +107,8 @@ export default function Page({ params }) {
                 <label>
                 <input
             		type="radio"
-                	name={`question-${question.id}`}
-                	value={answer.id}
+                name={`question-${question.id}`}
+                value={answer.id}
             		onChange={() =>
                     handleAnswerSelection(question.id, answer.id)
                 }

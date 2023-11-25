@@ -44,7 +44,7 @@ const Page = ({params}) => {
                     <div className='answer'>
                         <p className={chosenAnswer.isCorrect ? 'correct' : 'incorrect'}>Chosen: {chosenAnswer.answer}</p>
                     </div>
-                    {chosenAnswer && !chosenAnswer.isCorrect && <p>Correct answer: {question.answers.find((answer)=>{return answer.isCorrect}).answer}</p>}
+                    {chosenAnswer && !chosenAnswer.isCorrect && <p>Correct answer: {question.answers.find((answer)=>{return answer.isCorrect})?.answer}</p>}
                 </div>
             )
         })

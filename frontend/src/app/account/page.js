@@ -3,6 +3,7 @@
 import "./login.scss"
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -32,23 +33,16 @@ const LoginPage = () => {
       });
 
       if (response.ok) {
-        // Handle successful login here, e.g., redirect to a dashboard.
-        //get response token
         const data = await response.json();
-        //save token to local storage
         localStorage.setItem('token', data.token);
         localStorage.setItem('userId', data.id);
         router.push('/?loggedIn=true');
-        //redirect to home page
 
       } else {
-        // Handle login failure, e.g., display an error message.
         setIsError(true);
         setErrorMessage("Login failed. Please try again later.");
       }
     } catch (error) {
-      // Handle any network or client-side errors here.
-      console.error(error);
       setIsError(true);
       setErrorMessage(error.message);
     }
@@ -85,6 +79,7 @@ const LoginPage = () => {
         </div>
         <button className="cta-button" type="submit">Login</button>
       </form>
+        <div className="flex flex--center"><Link href="/account/create">Create Account!</Link></div>
       </div>
     </div>
   );

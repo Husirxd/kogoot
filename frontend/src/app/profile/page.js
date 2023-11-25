@@ -28,9 +28,10 @@ export default function ProfilePage(){
         if(!user){
             return;
         }
-        fetch(`http://localhost:8080/quizzes?authorId=${user.id}`)
+        fetch(`http://localhost:8080/quizzes/user/${user.id}`)
         .then((res)=>res.json())
         .then((data)=>{
+            
             setQuizzes(data);
         })
         .catch((err)=>{
@@ -79,7 +80,7 @@ export default function ProfilePage(){
             </div>
             <div className="flex flex--center"><button className="cta-button"><Link href={`/create`}>Create New!</Link></button></div>
         <div className="container quizzes-list--profile">
-            {quizzes && quizzes.map((quiz)=>{
+            {quizzes && quizzes?.map((quiz)=>{
                 return (
                     <div className="quiz-tile" key={quiz.id}>
                         <div className='quiz-tile__info'>

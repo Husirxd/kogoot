@@ -2,7 +2,7 @@
 .profile{
     margin-top: 100px;
     min-height: 20vh;
-
+    margin-bottom: rem;
     &__header{
         display: flex;
         flex-direction: column;
@@ -25,6 +25,7 @@
 }
 
 .quizzes-list--profile{
+    margin-bottom: 4rem;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     margin-top: 2rem;
